@@ -1,0 +1,160 @@
+<mxfile host="Electron" modified="2024-07-12T07:31:02.779Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.5.3 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="xrUXCV6rpmKe7k8JnnHa" version="24.5.3" type="device">
+  <diagram name="Page-1" id="q9fXiDbtFGfIFS3zPCDt">
+    <mxGraphModel dx="810" dy="473" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="690" pageHeight="980" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-2" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Differences:&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-align: center;&quot;&gt;two , numeric data&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="320" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-3" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;stats::t.test(), stats::wilcox.test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="40" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-4" target="pUr-lWwEH94ndOfNJBwO-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-4" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_t_test(), f_wilcox_test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="40" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-5" value="test statistic (t, U),&amp;nbsp;&lt;div&gt;p value,&amp;nbsp;&lt;/div&gt;&lt;div&gt;effect size (Cohen&#39;s d, Cramer&#39;s V)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="40" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-14" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Differences:&amp;nbsp; multiple&lt;/span&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&amp;nbsp;samples, one explanatory factor, numeric data&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="100" width="440" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-15" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;stats::aov(), stats::kruskal.test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="130" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="155" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-16" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_one_anova(), f_kruskal_test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="130" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-17" value="test statistic (F,&amp;nbsp; H),&amp;nbsp;&lt;div&gt;p value,&amp;nbsp;&lt;/div&gt;&lt;div&gt;effect size (\(\eta^2\))&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="130" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-23" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Differences:&amp;nbsp; multiple&lt;/span&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&amp;nbsp;samples, one explanatory factor, block design, numeric data&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="190" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-24" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;stats::aov(), stats::friedman.test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="220" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-26">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-26" target="pUr-lWwEH94ndOfNJBwO-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-26" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_one_block_anova&lt;/font&gt;&lt;/span&gt;&lt;font face=&quot;Lucida Console&quot;&gt;(), f_friedman_test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="220" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-27" value="test statistic (F,&amp;nbsp; Q),&amp;nbsp;&lt;div&gt;p value,&amp;nbsp;&lt;/div&gt;&lt;div&gt;effect size (\(\eta^2\))&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="220" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-28" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Contingency table&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="280" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-29" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;stats::&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;chisq.test()&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="310" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-31" target="pUr-lWwEH94ndOfNJBwO-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-31" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_chisq_test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="310" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-32" value="test statistic (\(\chi^2\)),&amp;nbsp;&lt;div&gt;p value,&amp;nbsp;&lt;/div&gt;&lt;div&gt;effect size (Cramer&#39;s V)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="310" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-33" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Normality, equality of variances&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="370" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-34" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;stats::shapiro_test&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;()&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;car::&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;Lucida Console&quot;&gt;leveneTest()&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="400" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-36">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="425" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-36" target="pUr-lWwEH94ndOfNJBwO-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-36" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_shapiro_test()&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_levene_test()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="400" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-37" value="test statistic (W, F),&amp;nbsp;&lt;div&gt;p value&amp;nbsp;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="400" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-38" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Enrichment&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="460" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="490" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="515" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-41" target="pUr-lWwEH94ndOfNJBwO-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-41" value="&lt;font face=&quot;Lucida Console&quot;&gt;f_enrichment()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="490" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-42" value="p value,&amp;nbsp;&lt;div&gt;effect size (odds ratio/OR)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="490" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-43" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Correlation, numeric variables&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="550" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-44" value="&lt;font face=&quot;Lucida Console&quot;&gt;stats::cor.test()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="580" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-46" value="&lt;font face=&quot;Lucida Console&quot;&gt;f_cor_test()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="580" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-47" value="p value (permutation, bootstrap),&amp;nbsp;&lt;div style=&quot;font-size: 12px;&quot;&gt;effect size (r, Spearman&#39;s \(\rho\), Kendall&#39;s \(\tau\), Chatterjee&#39;s \(\xi\)&lt;span style=&quot;background-color: initial;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=12;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="580" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-52" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Meta-estimates, inverse variance&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="10" y="650" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-53" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;meta::metagen()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="10" y="680" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-55">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="705" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-55" target="pUr-lWwEH94ndOfNJBwO-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-55" value="&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;f_meta()&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="220" y="680" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-56" value="test statistic (Cochran&#39;s Q, Z),&amp;nbsp;&lt;div&gt;p value&amp;nbsp;&lt;/div&gt;&lt;div&gt;meta-estimates \(\pm\) 95% CI&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="430" y="680" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.016;entryY=0.511;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-16" target="pUr-lWwEH94ndOfNJBwO-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pUr-lWwEH94ndOfNJBwO-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.016;entryY=0.517;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="pUr-lWwEH94ndOfNJBwO-46" target="pUr-lWwEH94ndOfNJBwO-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
