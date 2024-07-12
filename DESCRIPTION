@@ -1,0 +1,26 @@
+Package: fastTest
+Type: Package
+Title: Fast Statistical Hypothesis Testing
+Version: 0.1.0
+Maintainer: Piotr Tymoszuk <piotr.s.tymoszuk@gmail.com>
+Author: Who wrote it
+Description: The package provided a medley of basic statistical hypothesis 
+    tests such as T, Mann-Whithey, or chi-square test, with the corresponding 
+    most popular effect size statistics. Thanks to C++ implementations, they 
+    offer a faster alternative to the respective tools in base R.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Authors@R: 
+    person("Piotr", "Tymoszuk", , "piotr.s.tymoszuk@gmail.com", 
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0398-6034"))
+Imports: 
+    furrr,
+    future,
+    purrr,
+    Rcpp (>= 1.0.10),
+    rlang,
+    tibble
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+LinkingTo: Rcpp
