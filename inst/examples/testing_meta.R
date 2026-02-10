@@ -9,6 +9,8 @@
 
   library(microbenchmark)
 
+  reduce <- purrr::reduce
+
 # data: recidivism and mental health, Assink 2016 ------
 
   meta_data <- dat.assink2016 %>%

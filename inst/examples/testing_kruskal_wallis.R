@@ -1,4 +1,4 @@
-# Testing for Levene test functions
+# Testing for Kruskal-Wallis tests
 
 # tools --------
 

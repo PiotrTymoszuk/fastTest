@@ -5,7 +5,8 @@
   library(tidyverse)
   library(fastTest)
   library(org.Hs.eg.db)
-  library(biggrExtra)
+  library(perich)
+  library(trafo)
   library(AnnotationDbi)
 
   library(microbenchmark)
@@ -17,52 +18,45 @@
 
   ## a list with mapping of the entrez IDs to GO terms
 
-  all_go <- tcga_data$entrez_id %>%
-    unique %>%
-    mapIds(org.Hs.eg.db,
-           keys = .,
-           keytype = 'ENTREZID',
-           column = 'GO')
+  data("tcga_mutations")
 
-  all_go <- tibble(entrez_id = names(all_go),
-                   go_id = all_go) %>%
-    filter(complete.cases(.))
+  ## top mutations in the TCGA bladder cancer data and all
+  ## recorded mutations
 
-  all_go <- split(all_go$entrez_id, all_go$go_id)
+  mutations <- list()
 
-  ## vectors of IDs for all available genes, up- and downregulated genes
+  mutations$top <-
+    sort(colMeans(tcga_mutations[, -2:-1]), decreasing = T)[1:200]
 
-  all_genes <- tcga_data %>%
-    filter(complete.cases(.)) %>%
-    .$entrez_id %>%
-    unique
+  mutations$all <- tcga_mutations[, -2:-1]
 
-  up_genes <- tcga_data %>%
-    filter(complete.cases(.),
-           regulation == 'upregulated') %>%
-    .$entrez_id %>%
-    unique
+  mutations <- mutations %>%
+    map(names)
 
-  down_genes <-  tcga_data %>%
-    filter(complete.cases(.),
-           regulation == 'downregulated') %>%
-    .$entrez_id %>%
-    unique
+  go_lexicon <-
+    tibble(gene_symbol = mutations$all,
+           go_id = mapIds(org.Hs.eg.db,
+                          keys = mutations$all,
+                          keytype = 'SYMBOL',
+                          column = 'GO')) %>%
+    blast(go_id) %>%
+    map(~.x$gene_symbol)
 
 # Testing ---------
 
-  testFisher <- f_enrichment(up_genes,
-                             dict = all_go,
-                             all = all_genes,
+  testFisher <- f_enrichment(mutations$top,
+                             dict = go_lexicon,
+                             all = mutations$all,
                              type = 'fisher',
                              as_data_frame = TRUE,
                              adj_method = 'BH')
 
-  testEnrich <- f_enrichment(up_genes,
-                             dict = all_go[1:1000],
-                             all = all_genes,
+  testEnrich <- f_enrichment(mutations$top,
+                             dict = go_lexicon,
+                             all = mutations$all,
                              type = 'random',
                              n_iter = 1000,
+                             as_data_frame = TRUE,
                              .parallel = TRUE,
                              .n_chunks = 100)
 

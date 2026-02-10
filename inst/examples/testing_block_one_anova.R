@@ -1,4 +1,4 @@
-# Functionality of block-desing one-way ANOVA
+# Functionality of block-design one-way ANOVA
 
 # tools --------
 

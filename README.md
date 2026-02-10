@@ -19,7 +19,10 @@ devtools::install_github('PiotrTymoszuk/fastTest')
 ```
 ## Acknowledgements
 
-Credits to creators, contributors and maintainers of [Rcpp](https://www.rcpp.org/), [tidyverse](https://www.tidyverse.org/), and [furrr](https://furrr.futureverse.org/).
+Credits to creators, contributors and maintainers of 
+[Rcpp](https://www.rcpp.org/), 
+[tidyverse](https://www.tidyverse.org/), and 
+[furrr](https://furrr.futureverse.org/).
 
 
 ## Terms of use
