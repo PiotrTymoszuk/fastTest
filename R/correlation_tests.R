@@ -14,7 +14,7 @@
 #' investigated by the xi family of correlation coefficients: the bootstrapped
 #' mean is likely to be substantially lower than the correlation coefficient
 #' for the entire data set. Nevertheless, bootstrapped xi coefficients with
-#' the respective confidence intervals are good estimate of interpolation of the
+#' the respective confidence intervals are good estimates of interpolation of the
 #' data trends.
 #' Please note, that bootstrapped p values refer to the two-sided setting.
 #' If a numeric matrix or data frame is provided as the `x` argument, the

@@ -33,6 +33,7 @@ IntegerVector countMulti(NumericVector x);
 // resampling
 
 NumericMatrix resampleVec(NumericVector x, int n_iter, bool replace);
+IntegerMatrix resampleIntVec(IntegerVector x, int n_iter, bool replace);
 
 // string and numeric sequences
 

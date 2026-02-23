@@ -1,17 +1,19 @@
 # Unweighted and weighted Cohen's kappa for a pair of factors/integers
-# or a pair of integer matrices.
+# or a pair of integer matrices: permutation and bootstrap tests.
 
-#' Cohen's kappa inter-rater reliability statistic.
+#' Cohen's kappa inter-rater reliability statistic: permutation and bootstrap
+#' tests
 #'
 #' @description
-#' The function computes unweighted Cohen's kappa, or Cohen's kappa weighted
-#' with equally spaced or Fleiss - Cohen weights.
+#' The function computes permuted and bootstrapped unweighted Cohen's kappa,
+#' or Cohen's kappa weighted with equally spaced or Fleiss - Cohen weights.
 #'
 #' @details
 #' If `x` and `y` are matrices, the kappas are computed for the corresponding
 #' columns.
 #' Hence, these matrices or data frames need to have equal dimensions.
 #' `NA` values are silently removed.
+#'
 #'
 #' @references
 #' Cohen J. A Coefficient of Agreement for Nominal Scales.
@@ -22,16 +24,15 @@
 #' weighted kappa. Psychol Bull (1969) 72:323–327. doi:10.1037/h0028106
 #'
 #' @return
-#' The default `f_kappa()` method for a pair of vectors returns a numeric vector
-#' with the number of complete observations and kappa value.
-#' The method for a pair of matrices or data frames returns
-#' a numeric matrix or a data frame with the numbers of complete observations and
-#' kappa values.
-#' If `as_data_frame = TRUE`, the output is coerced to a data frame, and,
-#' optionally appended with names of variables in matrices or data frames.
-#' Note: because of checks of level compatibility, the function is way faster
-#' for integers than factors.
+#' A numeric vector, matrix, or a data frame with the following elements:
+#' numbers of pairwise complete observations, the requested correlation
+#' coefficients in the entire data set, bootstrapped means and confidence
+#' interval bounds, numbers of successful iterations of the algorithm,
+#' numbers of re-samples in favor of the null hypothesis H0, numbers of
+#' re-samples in favor of the alternative hypothesis H1, p values, and,
+#' optionally p values adjusted for multiple testing.
 #'
+#' @inheritParams f_cor_test
 #' @param x a factor or integer vector, an integer matrix, or a data frame
 #' with factor or integer columns.
 #' @param y a factor or integer vector, an integer matrix, or a data frame
@@ -39,21 +40,28 @@
 #' @param method weighting method: `"unweighted"` (default) returns unweighted kappa,
 #' `"equal"` computes kappas with equally spaced weighting, and `"fleiss"`
 #' calculates kappas with Fleiss - Cohen weights.
-#' @param as_data_frame logical: should the output be coerced to a data frame?
 #' @param ... additional arguments passed to methods.
 #'
 #' @export
 
-  f_kappa <- function(x, ...) UseMethod("f_kappa")
+  f_kappa_test <- function(x, ...) UseMethod("f_kappa_test")
 
-#' @rdname f_kappa
+#' @rdname f_kappa_test
 #' @export
 
-  f_kappa.default <- function(x,
-                              y,
-                              method = c("unweighted", "equal", "fleiss"),
-                              as_data_frame = FALSE,
-                              ...) {
+  f_kappa_test.default <- function(x,
+                                   y,
+                                   type = c("permutation",
+                                            "bootstrap"),
+                                   method = c("unweighted", "equal", "fleiss"),
+                                   alternative = c("two.sided",
+                                                   "less",
+                                                   "greater"),
+                                   ci_type = c("bca", "percentile"),
+                                   conf_level = 0.95,
+                                   as_data_frame = FALSE,
+                                   n_iter = 1000,
+                                   ...) {
 
     ## input control ---------
 
@@ -80,9 +88,19 @@
 
     }
 
+    type <- match.arg(type[1], c("permutation", "bootstrap"))
+
     method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
 
+    ci_type <- match.arg(ci_type[1], c("bca", "percentile"))
+
+    stopifnot(is.numeric(conf_level))
+    conf_level <- conf_level[1]
+
     stopifnot(is.logical(as_data_frame))
+
+    stopifnot(is.numeric(n_iter))
+    n_iter <- as.integer(n_iter[1])
 
     ## pre-processing --------
 
@@ -101,7 +119,15 @@
 
     ## computation -------
 
-    res <- kappaCpp(x, y, method)
+    if(type == "permutation") {
+
+      res <- permKappaVec(x, y, method, alternative, n_iter)
+
+    } else {
+
+      res <- bootKappaVec(x, y, method, ci_type, conf_level, n_iter)
+
+    }
 
     if(!as_data_frame) return(res)
 
@@ -109,14 +135,22 @@
 
   }
 
-#' @rdname f_kappa
+#' @rdname f_kappa_test
 #' @export
 
-  f_kappa.matrix <- function(x,
-                             y,
-                             method = c("unweighted", "equal", "fleiss"),
-                             as_data_frame = FALSE,
-                             ...) {
+  f_kappa_test.matrix <- function(x,
+                                  y,
+                                  type = c("permutation",
+                                           "bootstrap"),
+                                  method = c("unweighted", "equal", "fleiss"),
+                                  alternative = c("two.sided",
+                                                  "less",
+                                                  "greater"),
+                                  ci_type = c("bca", "percentile"),
+                                  conf_level = 0.95,
+                                  as_data_frame = FALSE,
+                                  n_iter = 1000,
+                                  ...) {
 
     ## entry control ----------
 
@@ -128,7 +162,6 @@
       stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
 
     }
-
 
     if(!is.integer(x)) stop("'x' has to be an integer matrix.", call. = FALSE)
     if(!is.integer(y)) stop("'y' has to be an integer matrix.", call. = FALSE)
@@ -149,13 +182,31 @@
 
     }
 
+    type <- match.arg(type[1], c("permutation", "bootstrap"))
+
     method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
+
+    ci_type <- match.arg(ci_type[1], c("bca", "percentile"))
+
+    stopifnot(is.numeric(conf_level))
+    conf_level <- conf_level[1]
 
     stopifnot(is.logical(as_data_frame))
 
+    stopifnot(is.numeric(n_iter))
+    n_iter <- as.integer(n_iter[1])
+
     ## computation --------
 
-    res <- kappaMtx(x, y, method)
+    if(type == "permutation") {
+
+      res <- permKappaMtx(x, y, method, alternative, n_iter)
+
+    } else {
+
+      res <- bootKappaMtx(x, y, method, ci_type, conf_level, n_iter)
+
+    }
 
     if(!is.null(x_colnames) & !is.null(x_colnames)) {
 
@@ -169,13 +220,22 @@
 
   }
 
-#' @rdname f_kappa
+#' @rdname f_kappa_test
 #' @export
 
-  f_kappa.data.frame <- function(x,
-                                 y,
-                                 method = c("unweighted", "equal", "fleiss"),
-                                 as_data_frame = FALSE, ...) {
+  f_kappa_test.data.frame <- function(x,
+                                      y,
+                                      type = c("permutation",
+                                               "bootstrap"),
+                                      method = c("unweighted", "equal", "fleiss"),
+                                      alternative = c("two.sided",
+                                                      "less",
+                                                      "greater"),
+                                      ci_type = c("bca", "percentile"),
+                                      conf_level = 0.95,
+                                      as_data_frame = FALSE,
+                                      n_iter = 1000,
+                                      ...) {
 
     ## entry control ---------
 
@@ -200,9 +260,19 @@
 
     y <- y[, x_colnames]
 
+    type <- match.arg(type[1], c("permutation", "bootstrap"))
+
     method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
 
+    ci_type <- match.arg(ci_type[1], c("bca", "percentile"))
+
+    stopifnot(is.numeric(conf_level))
+    conf_level <- conf_level[1]
+
     stopifnot(is.logical(as_data_frame))
+
+    stopifnot(is.numeric(n_iter))
+    n_iter <- as.integer(n_iter[1])
 
     ## type compatibility checks ----------
 
@@ -259,11 +329,26 @@
 
     }
 
-    ## computation of kappas --------
+    ## calculation of the kappas -------
 
-    res <- kappaMtx(as.matrix(x),
-                    as.matrix(y),
-                    method)
+    if(type == "permutation") {
+
+      res <- permKappaMtx(as.matrix(x),
+                          as.matrix(y),
+                          method,
+                          alternative,
+                          n_iter)
+
+    } else {
+
+      res <- bootKappaMtx(as.matrix(x),
+                          as.matrix(y),
+                          method,
+                          ci_type,
+                          conf_level,
+                          n_iter)
+
+    }
 
     rownames(res) <- x_colnames
 

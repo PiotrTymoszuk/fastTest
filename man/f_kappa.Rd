@@ -12,7 +12,7 @@ f_kappa(x, ...)
 \method{f_kappa}{default}(
   x,
   y,
-  type = c("unweighted", "equal", "fleiss"),
+  method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
   ...
 )
@@ -20,12 +20,18 @@ f_kappa(x, ...)
 \method{f_kappa}{matrix}(
   x,
   y,
-  type = c("unweighted", "equal", "fleiss"),
+  method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
   ...
 )
 
-\method{f_kappa}{data.frame}(x, y, type = c("unweighted", "equal", "fleiss"), as_data_frame = FALSE)
+\method{f_kappa}{data.frame}(
+  x,
+  y,
+  method = c("unweighted", "equal", "fleiss"),
+  as_data_frame = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a factor or integer vector, an integer matrix, or a data frame
@@ -36,7 +42,7 @@ with factor or integer columns.}
 \item{y}{a factor or integer vector, an integer matrix, or a data frame
 with factor or integer columns.}
 
-\item{type}{type of weights: \code{"unweighted"} (default) returns unweighted kappa,
+\item{method}{weighting method: \code{"unweighted"} (default) returns unweighted kappa,
 \code{"equal"} computes kappas with equally spaced weighting, and \code{"fleiss"}
 calculates kappas with Fleiss - Cohen weights.}
 

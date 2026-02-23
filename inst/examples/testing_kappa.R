@@ -23,7 +23,7 @@
   colnames(mtx_y) <- paste0("variable_", 1:10)
 
 
-# VCD's kappa ---------
+# VCD's kappa and fastTest kappa ---------
 
   ctg_tbl <- table(tst_x, tst_y)
 
@@ -57,10 +57,25 @@
           "unweighted",
           as_data_frame = TRUE)
 
+# Permutation tests ---------
+
+  f_kappa_test(tst_x, tst_y)
+  f_kappa_test(tst_x, tst_y,
+               type = "bootstrap")
+
+  f_kappa_test(mtx_x, mtx_y, alternative = "less")
+  f_kappa_test(mtx_x, mtx_y, type = "bootstrap", as_data_frame = TRUE)
 
 
+  f_kappa_test(map_dfc(as.data.frame(mtx_x), factor),
+               map_dfc(as.data.frame(mtx_y), factor),
+               method = "fleiss",
+               as_data_frame = TRUE)
 
+  f_kappa_test(map_dfc(as.data.frame(mtx_x), factor),
+               map_dfc(as.data.frame(mtx_y), factor),
+               type = "bootstrap",
+               method = "fleiss",
+               as_data_frame = TRUE)
 
-
-
-
+# END ---------

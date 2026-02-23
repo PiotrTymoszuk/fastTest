@@ -278,6 +278,26 @@ NumericMatrix resampleVec(NumericVector x,
 
 }
 
+IntegerMatrix resampleIntVec(IntegerVector x,
+                             int n_iter = 100,
+                             bool replace = false) {
+
+  int xLen = x.length();
+  IntegerVector resample(xLen);
+  IntegerMatrix result(n_iter, xLen);
+
+  for(int i = 0; i < n_iter; ++i) {
+
+    resample = sample(x, xLen, replace);
+
+    result(i, _) = resample;
+
+  }
+
+  return result;
+
+}
+
 // string and numeric sequences
 
 CharacterVector stringSeq(std::string prefix, int start, int end) {

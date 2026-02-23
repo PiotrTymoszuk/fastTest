@@ -15,7 +15,7 @@ using namespace Rcpp;
 
 NumericVector kappaCpp(IntegerVector x,
                        IntegerVector y,
-                       String  type) {
+                       String  method) {
 
   /// contingency matrix: length checks and NA removal
   /// is done by the internal utility
@@ -42,7 +42,7 @@ NumericVector kappaCpp(IntegerVector x,
   double po;
   double pc;
 
-  if(type == "unweighted") {
+  if(method == "unweighted") {
 
     po = sum(ctg_diag)/ctg_total_freq;
     pc = crossProduct(ctg_col_freq, ctg_row_freq)(0, 0);
@@ -59,7 +59,7 @@ NumericVector kappaCpp(IntegerVector x,
 
     NumericMatrix weights;
 
-    if(type == "equal") {
+    if(method == "equal") {
 
       /// equal-spaced weights
 
@@ -103,7 +103,7 @@ NumericVector kappaCpp(IntegerVector x,
 
 NumericMatrix kappaMtx(IntegerMatrix x,
                        IntegerMatrix y,
-                       String type) {
+                       String method) {
 
   /// the matrices need to have equal dimensions
 
@@ -123,7 +123,7 @@ NumericMatrix kappaMtx(IntegerMatrix x,
 
   for(int i = 0; i < n_col; ++i) {
 
-    res(i, _) = kappaCpp(x(_, i), y(_, i), type);
+    res(i, _) = kappaCpp(x(_, i), y(_, i), method);
 
   }
 
@@ -132,4 +132,3 @@ NumericMatrix kappaMtx(IntegerMatrix x,
 }
 
 // END
-

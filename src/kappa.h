@@ -7,6 +7,6 @@ using namespace Rcpp;
 
 NumericVector kappaCpp(IntegerVector x,
                        IntegerVector y,
-                       String type);
+                       String  method);
 
 #endif // __kappa__
