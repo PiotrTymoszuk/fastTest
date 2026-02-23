@@ -10,8 +10,11 @@ using namespace Rcpp;
 
 // calculation of element frequency in a numeric vector
 // NAs are skipped!
-// Table creates a an equivalent of R's table (i.e. a named vector of
-// frequencies), while xTable produces a contingency matrix
+// `Table()` creates a an equivalent of R's table (i.e. a named vector of
+// frequencies), while `xTable()` produces a contingency matrix
+// `irrTable()` takes two vectors of equal lengths and returns a symmetric
+// matrix of counts in their common categories (NA's are pairwise silently removed).
+// This table will be used in inter-rater reliability (IRR) analysis tools.
 
 // [[Rcpp::export]]
 
@@ -46,7 +49,7 @@ NumericMatrix xTable(NumericVector x, IntegerVector f) {
   int x_dim = x_cat.length();
   int f_dim = f_cat.length();
 
-  // vectors storing the subsetting indexes and tallying results
+  // vectors storing the sub-setting indexes and tallying results
 
   List x_splits(f_dim);
 
@@ -88,6 +91,50 @@ NumericMatrix xTable(NumericVector x, IntegerVector f) {
     }
 
   }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+
+NumericMatrix irrTable(IntegerVector x, IntegerVector y) {
+
+  /// entry control and pairwise NA removal
+
+  int x_len = x.length();
+  int y_len = y.length();
+
+  if(x_len != y_len) {
+
+    stop("Unequal lengths of `x` and `y` vectors");
+
+  }
+
+  LogicalVector indexes(x_len, true);
+
+  indexes = !(is_na(x) | is_na(y));
+
+  x = x[indexes];
+  y = y[indexes];
+
+  int cmm_len = x.length();
+
+  /// the common maximum and the result table
+
+  int max_val = max(union_(x, y));
+
+  NumericMatrix res(max_val, max_val);
+
+  /// category counting
+
+  for(int i = 0; i < cmm_len; ++i) {
+
+    res(x[i] - 1, y[i] - 1)++;
+
+  }
+
+  /// output
 
   return res;
 

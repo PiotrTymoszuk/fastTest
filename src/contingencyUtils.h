@@ -9,5 +9,6 @@ using namespace Rcpp;
 
 IntegerVector Table(NumericVector x);
 NumericMatrix xTable(NumericVector x, IntegerVector f);
+NumericMatrix irrTable(IntegerVector x, IntegerVector y);
 
 #endif // __contingencyUtils__

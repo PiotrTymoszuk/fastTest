@@ -21,6 +21,10 @@ xTable <- function(x, f) {
     .Call('_fastTest_xTable', PACKAGE = 'fastTest', x, f)
 }
 
+irrTable <- function(x, y) {
+    .Call('_fastTest_irrTable', PACKAGE = 'fastTest', x, y)
+}
+
 permCorVec <- function(x, y, method = "pearson", alternative = "two.sided", n_iter = 1000L) {
     .Call('_fastTest_permCorVec', PACKAGE = 'fastTest', x, y, method, alternative, n_iter)
 }
@@ -69,6 +73,10 @@ friedmanMtx <- function(x, f, b, crash = FALSE) {
     .Call('_fastTest_friedmanMtx', PACKAGE = 'fastTest', x, f, b, crash)
 }
 
+kappaCpp <- function(x, y, type) {
+    .Call('_fastTest_kappaCpp', PACKAGE = 'fastTest', x, y, type)
+}
+
 kruskalVec <- function(x, f, crash = TRUE) {
     .Call('_fastTest_kruskalVec', PACKAGE = 'fastTest', x, f, crash)
 }
@@ -87,6 +95,10 @@ leveneVec <- function(x, f, type = "standard", crash = TRUE) {
 
 leveneMtx <- function(x, f, type = "standard", crash = TRUE) {
     .Call('_fastTest_leveneMtx', PACKAGE = 'fastTest', x, f, type, crash)
+}
+
+mtxProduct <- function(x, y) {
+    .Call('_fastTest_mtxProduct', PACKAGE = 'fastTest', x, y)
 }
 
 metaVec <- function(y, e, type = "fixed", alternative = "two.sided", conf_level = 0.95, crash = TRUE) {
@@ -195,6 +207,10 @@ outerDelta <- function(x, y, na_rm = TRUE) {
 
 outerProduct <- function(x, y, na_rm = TRUE) {
     .Call('_fastTest_outerProduct', PACKAGE = 'fastTest', x, y, na_rm)
+}
+
+crossProduct <- function(x, y) {
+    .Call('_fastTest_crossProduct', PACKAGE = 'fastTest', x, y)
 }
 
 testWilcoxonVec <- function(x, f, type = "standard", alternative = "two.sided", exact = FALSE, correct = TRUE, hl_estimate = FALSE, crash = TRUE) {

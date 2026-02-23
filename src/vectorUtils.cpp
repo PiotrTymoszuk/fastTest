@@ -193,6 +193,23 @@ NumericMatrix outerProduct(NumericVector x,
 
 }
 
+// cross-product, NA values are silently removed
+
+// [[Rcpp::export]]
+
+NumericMatrix crossProduct(NumericVector x,
+                           NumericVector y) {
+
+
+  x = na_omit(x);
+  y = na_omit(y);
+
+  Function f("crossprod");
+
+  return f(x, y);
+
+}
+
 // values from a diagonal of an entire numeric matrix and diagonal
 
 NumericVector matrix2vector(NumericMatrix x, bool by_row = true) {
@@ -261,7 +278,7 @@ NumericMatrix resampleVec(NumericVector x,
 
 }
 
-// string sequences
+// string and numeric sequences
 
 CharacterVector stringSeq(std::string prefix, int start, int end) {
 
@@ -274,6 +291,25 @@ CharacterVector stringSeq(std::string prefix, int start, int end) {
   for(int i = 0; i < n; ++i) prefix + outString[i];
 
   return outString;
+
+}
+
+NumericVector intSeq(int start, int end) {
+
+  int seq_len = end - start + 1;
+
+  double counter = 1.0 * start;
+  NumericVector res_seq(seq_len);
+
+  for(int i = 0; i < seq_len; ++i) {
+
+    res_seq[i] = counter;
+
+    counter += 1;
+
+  }
+
+  return res_seq;
 
 }
 
