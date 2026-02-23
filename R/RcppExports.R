@@ -77,6 +77,10 @@ kappaCpp <- function(x, y, type) {
     .Call('_fastTest_kappaCpp', PACKAGE = 'fastTest', x, y, type)
 }
 
+kappaMtx <- function(x, y, type) {
+    .Call('_fastTest_kappaMtx', PACKAGE = 'fastTest', x, y, type)
+}
+
 kruskalVec <- function(x, f, crash = TRUE) {
     .Call('_fastTest_kruskalVec', PACKAGE = 'fastTest', x, f, crash)
 }

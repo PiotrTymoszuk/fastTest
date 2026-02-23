@@ -13,9 +13,9 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 
-double kappaCpp(IntegerVector x,
-                IntegerVector y,
-                String  type) {
+NumericVector kappaCpp(IntegerVector x,
+                       IntegerVector y,
+                       String  type) {
 
   /// contingency matrix: length checks and NA removal
   /// is done by the internal utility
@@ -84,7 +84,50 @@ double kappaCpp(IntegerVector x,
 
   }
 
-  return (po - pc)/(1 - pc);
+  /// the output vector
+
+  NumericVector res(2);
+  res.names() = CharacterVector({"n", "kappa"});
+
+  res[0] = ctg_total_freq;
+  res[1] = (po - pc)/(1 - pc);
+
+  return res;
+
+}
+
+// Cohen's kappa for a pair of integer matrices
+// the kappas are computed in a column-wise manner
+
+// [[Rcpp::export]]
+
+NumericMatrix kappaMtx(IntegerMatrix x,
+                       IntegerMatrix y,
+                       String type) {
+
+  /// the matrices need to have equal dimensions
+
+  if((x.nrow() != y.nrow()) | (x.ncol() != y.ncol())) {
+
+    stop("Matrices x and y must have equal dimensions");
+
+  }
+
+  /// computation
+
+  int n_col = x.ncol();
+
+  NumericMatrix res(n_col, 2);
+
+  colnames(res) = CharacterVector({"n", "kappa"});
+
+  for(int i = 0; i < n_col; ++i) {
+
+    res(i, _) = kappaCpp(x(_, i), y(_, i), type);
+
+  }
+
+  return res;
 
 }
 
