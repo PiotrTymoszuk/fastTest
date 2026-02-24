@@ -105,6 +105,22 @@ kruskalMtx <- function(x, f, crash = TRUE) {
     .Call('_fastTest_kruskalMtx', PACKAGE = 'fastTest', x, f, crash)
 }
 
+ksTestCpp <- function(x, y, alternative = "two.sided") {
+    .Call('_fastTest_ksTestCpp', PACKAGE = 'fastTest', x, y, alternative)
+}
+
+ksTestVec <- function(x, f, alternative = "two.sided") {
+    .Call('_fastTest_ksTestVec', PACKAGE = 'fastTest', x, f, alternative)
+}
+
+ksTestMtx <- function(x, f, alternative = "two.sided") {
+    .Call('_fastTest_ksTestMtx', PACKAGE = 'fastTest', x, f, alternative)
+}
+
+ksTest2Mtx <- function(x, y, alternative = "two.sided") {
+    .Call('_fastTest_ksTest2Mtx', PACKAGE = 'fastTest', x, y, alternative)
+}
+
 leveneBase <- function(x, type = "standard") {
     .Call('_fastTest_leveneBase', PACKAGE = 'fastTest', x, type)
 }
@@ -115,10 +131,6 @@ leveneVec <- function(x, f, type = "standard", crash = TRUE) {
 
 leveneMtx <- function(x, f, type = "standard", crash = TRUE) {
     .Call('_fastTest_leveneMtx', PACKAGE = 'fastTest', x, f, type, crash)
-}
-
-mtxProduct <- function(x, y) {
-    .Call('_fastTest_mtxProduct', PACKAGE = 'fastTest', x, y)
 }
 
 metaVec <- function(y, e, type = "fixed", alternative = "two.sided", conf_level = 0.95, crash = TRUE) {
@@ -167,6 +179,10 @@ perCI <- function(theta, conf_level = 0.95) {
 
 BCA <- function(theta, conf_level = 0.95) {
     .Call('_fastTest_BCA', PACKAGE = 'fastTest', theta, conf_level)
+}
+
+pSmirnov <- function(q, n1, n2, alternative) {
+    .Call('_fastTest_pSmirnov', PACKAGE = 'fastTest', q, n1, n2, alternative)
 }
 
 oneAnovaBase <- function(x) {
@@ -231,6 +247,10 @@ outerProduct <- function(x, y, na_rm = TRUE) {
 
 crossProduct <- function(x, y) {
     .Call('_fastTest_crossProduct', PACKAGE = 'fastTest', x, y)
+}
+
+order_ <- function(x) {
+    .Call('_fastTest_order_', PACKAGE = 'fastTest', x)
 }
 
 testWilcoxonVec <- function(x, f, type = "standard", alternative = "two.sided", exact = FALSE, correct = TRUE, hl_estimate = FALSE, crash = TRUE) {

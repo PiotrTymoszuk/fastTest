@@ -369,6 +369,58 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ksTestCpp
+NumericVector ksTestCpp(NumericVector x, NumericVector y, String alternative);
+RcppExport SEXP _fastTest_ksTestCpp(SEXP xSEXP, SEXP ySEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ksTestCpp(x, y, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ksTestVec
+NumericVector ksTestVec(NumericVector x, IntegerVector f, String alternative);
+RcppExport SEXP _fastTest_ksTestVec(SEXP xSEXP, SEXP fSEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type f(fSEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ksTestVec(x, f, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ksTestMtx
+NumericMatrix ksTestMtx(NumericMatrix x, IntegerVector f, String alternative);
+RcppExport SEXP _fastTest_ksTestMtx(SEXP xSEXP, SEXP fSEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type f(fSEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ksTestMtx(x, f, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ksTest2Mtx
+NumericMatrix ksTest2Mtx(NumericMatrix x, NumericMatrix y, String alternative);
+RcppExport SEXP _fastTest_ksTest2Mtx(SEXP xSEXP, SEXP ySEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ksTest2Mtx(x, y, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
 // leveneBase
 NumericVector leveneBase(List x, String type);
 RcppExport SEXP _fastTest_leveneBase(SEXP xSEXP, SEXP typeSEXP) {
@@ -406,18 +458,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< String >::type type(typeSEXP);
     Rcpp::traits::input_parameter< bool >::type crash(crashSEXP);
     rcpp_result_gen = Rcpp::wrap(leveneMtx(x, f, type, crash));
-    return rcpp_result_gen;
-END_RCPP
-}
-// mtxProduct
-NumericMatrix mtxProduct(NumericMatrix x, NumericMatrix y);
-RcppExport SEXP _fastTest_mtxProduct(SEXP xSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(mtxProduct(x, y));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -573,6 +613,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< double >::type conf_level(conf_levelSEXP);
     rcpp_result_gen = Rcpp::wrap(BCA(theta, conf_level));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pSmirnov
+NumericVector pSmirnov(double q, double n1, double n2, String alternative);
+RcppExport SEXP _fastTest_pSmirnov(SEXP qSEXP, SEXP n1SEXP, SEXP n2SEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type q(qSEXP);
+    Rcpp::traits::input_parameter< double >::type n1(n1SEXP);
+    Rcpp::traits::input_parameter< double >::type n2(n2SEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(pSmirnov(q, n1, n2, alternative));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -789,6 +843,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// order_
+NumericVector order_(NumericVector x);
+RcppExport SEXP _fastTest_order_(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(order_(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // testWilcoxonVec
 NumericVector testWilcoxonVec(NumericVector x, IntegerVector f, String type, String alternative, bool exact, bool correct, bool hl_estimate, bool crash);
 RcppExport SEXP _fastTest_testWilcoxonVec(SEXP xSEXP, SEXP fSEXP, SEXP typeSEXP, SEXP alternativeSEXP, SEXP exactSEXP, SEXP correctSEXP, SEXP hl_estimateSEXP, SEXP crashSEXP) {
@@ -871,10 +936,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_bootKappaMtx", (DL_FUNC) &_fastTest_bootKappaMtx, 6},
     {"_fastTest_kruskalVec", (DL_FUNC) &_fastTest_kruskalVec, 3},
     {"_fastTest_kruskalMtx", (DL_FUNC) &_fastTest_kruskalMtx, 3},
+    {"_fastTest_ksTestCpp", (DL_FUNC) &_fastTest_ksTestCpp, 3},
+    {"_fastTest_ksTestVec", (DL_FUNC) &_fastTest_ksTestVec, 3},
+    {"_fastTest_ksTestMtx", (DL_FUNC) &_fastTest_ksTestMtx, 3},
+    {"_fastTest_ksTest2Mtx", (DL_FUNC) &_fastTest_ksTest2Mtx, 3},
     {"_fastTest_leveneBase", (DL_FUNC) &_fastTest_leveneBase, 2},
     {"_fastTest_leveneVec", (DL_FUNC) &_fastTest_leveneVec, 4},
     {"_fastTest_leveneMtx", (DL_FUNC) &_fastTest_leveneMtx, 4},
-    {"_fastTest_mtxProduct", (DL_FUNC) &_fastTest_mtxProduct, 2},
     {"_fastTest_metaVec", (DL_FUNC) &_fastTest_metaVec, 6},
     {"_fastTest_metaMtx", (DL_FUNC) &_fastTest_metaMtx, 6},
     {"_fastTest_metaList", (DL_FUNC) &_fastTest_metaList, 6},
@@ -887,6 +955,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_Quantile", (DL_FUNC) &_fastTest_Quantile, 2},
     {"_fastTest_perCI", (DL_FUNC) &_fastTest_perCI, 2},
     {"_fastTest_BCA", (DL_FUNC) &_fastTest_BCA, 2},
+    {"_fastTest_pSmirnov", (DL_FUNC) &_fastTest_pSmirnov, 4},
     {"_fastTest_oneAnovaBase", (DL_FUNC) &_fastTest_oneAnovaBase, 1},
     {"_fastTest_oneAnovaVec", (DL_FUNC) &_fastTest_oneAnovaVec, 3},
     {"_fastTest_oneAnovaMtx", (DL_FUNC) &_fastTest_oneAnovaMtx, 3},
@@ -903,6 +972,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_outerDelta", (DL_FUNC) &_fastTest_outerDelta, 3},
     {"_fastTest_outerProduct", (DL_FUNC) &_fastTest_outerProduct, 3},
     {"_fastTest_crossProduct", (DL_FUNC) &_fastTest_crossProduct, 2},
+    {"_fastTest_order_", (DL_FUNC) &_fastTest_order_, 1},
     {"_fastTest_testWilcoxonVec", (DL_FUNC) &_fastTest_testWilcoxonVec, 8},
     {"_fastTest_testWilcoxonStd", (DL_FUNC) &_fastTest_testWilcoxonStd, 8},
     {"_fastTest_testWilcoxonMtx", (DL_FUNC) &_fastTest_testWilcoxonMtx, 8},

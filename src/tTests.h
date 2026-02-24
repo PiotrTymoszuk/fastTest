@@ -1,5 +1,5 @@
-#ifndef __numericUtils__
-#define __numericUtils__
+#ifndef __tTests__
+#define __tTests__
 
 #include <Rcpp.h>
 
@@ -28,4 +28,4 @@ NumericVector tTestVec(NumericVector x,
                        bool crash);
 
 
-#endif // __numericUtils__
+#endif // __tTests__

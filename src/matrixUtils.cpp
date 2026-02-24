@@ -137,8 +137,6 @@ NumericMatrix mtxConstProd(NumericMatrix x, double d) {
 
 }
 
-// [[Rcpp::export]]
-
 NumericMatrix mtxProduct (NumericMatrix x, NumericMatrix y) {
 
   /// element-wise multiplication of two matrices of equal dimensions

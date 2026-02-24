@@ -28,6 +28,7 @@ NumericVector matrix2vector(NumericMatrix x, bool by_row);
 // sorting and ordering, duplicates
 
 NumericVector orderVector(NumericVector x, NumericVector y);
+NumericVector order_(NumericVector x);
 IntegerVector countMulti(NumericVector x);
 
 // resampling

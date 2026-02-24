@@ -245,6 +245,19 @@ NumericVector orderVector(NumericVector x, NumericVector y) {
 
 }
 
+// ordering a vector, like base R `order()`:
+
+//[[Rcpp::export]]
+
+NumericVector order_(NumericVector x) {
+
+  Function f("order");
+
+  return f(x);
+
+}
+
+
 // a table with duplicate frequency
 
 IntegerVector countMulti(NumericVector x) {

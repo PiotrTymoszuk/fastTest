@@ -30,4 +30,8 @@ NumericVector Quantile(NumericVector x, NumericVector probs);
 NumericVector perCI(NumericVector theta, double conf_level);
 NumericVector BCA(NumericVector theta, double conf_level);
 
+// Smirnov distribution
+
+NumericVector pSmirnov(double q, double n1, double n2, String alternative);
+
 #endif // __numericUtils__

@@ -190,4 +190,36 @@
 
   }
 
+# Asymptotic p values in Smirnov distribution ---------
+
+#' Asymptotic p values in Smirnov distribution.
+#'
+#' @description
+#' An internal, simplified wrapper function around \code{\link{psmirnov}}.
+#'
+#' @return a single numeric value: p value for the given quantile öf
+#' Smirnov distribution.
+#'
+#' @param q quantile of the distribution.
+#' @param n1 number of complete observations in the first sample.
+#' @param n2 number of complete observations in the second sample.
+#' @param alternative type of alternative hypothesis
+#'
+#' @export
+
+  asympt_smirnov <- function(q,
+                             n1,
+                             n2,
+                             alternative = c("two.sided", "less", "greater")) {
+
+    ## the input control is done by the wrapped function
+
+    psmirnov(q = q,
+             sizes = c(n1, n2),
+             alternative = alternative,
+             exact = FALSE,
+             lower.tail = FALSE)
+
+  }
+
 # END ------

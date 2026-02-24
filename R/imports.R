@@ -9,6 +9,7 @@
 #' @importFrom stats p.adjust
 #' @importFrom stats complete.cases
 #' @importFrom stats shapiro.test
+#' @importFrom stats psmirnov
 #'
 #' @importFrom purrr map
 #' @importFrom purrr map2
