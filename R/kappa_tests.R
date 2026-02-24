@@ -129,9 +129,14 @@
 
     }
 
+    res <- matrix(res,
+                  nrow = 1,
+                  dimnames = list(NULL,
+                                  names(res)))
+
     if(!as_data_frame) return(res)
 
-    return(as.data.frame(as.list(res)))
+    return(as.data.frame(res))
 
   }
 
@@ -150,6 +155,7 @@
                                   conf_level = 0.95,
                                   as_data_frame = FALSE,
                                   n_iter = 1000,
+                                  adj_method = "none",
                                   ...) {
 
     ## entry control ----------
@@ -196,6 +202,8 @@
     stopifnot(is.numeric(n_iter))
     n_iter <- as.integer(n_iter[1])
 
+    stopifnot(is.character(adj_method))
+
     ## computation --------
 
     if(type == "permutation") {
@@ -211,6 +219,28 @@
     if(!is.null(x_colnames) & !is.null(x_colnames)) {
 
       rownames(res) <- x_colnames
+
+    }
+
+    ## p value adjustment and the output ------
+
+    if(adj_method != 'none') {
+
+      p_adjusted <- NULL
+
+      if(type == "permutation") {
+
+        res <- cbind(res,
+                     p_adjusted = p.adjust(res[, 6],
+                                           method = adj_method))
+
+      } else {
+
+        res <- cbind(res,
+                     p_adjusted = p.adjust(res[, 9],
+                                           method = adj_method))
+
+      }
 
     }
 
@@ -235,6 +265,7 @@
                                       conf_level = 0.95,
                                       as_data_frame = FALSE,
                                       n_iter = 1000,
+                                      adj_method = "none",
                                       ...) {
 
     ## entry control ---------
@@ -273,6 +304,8 @@
 
     stopifnot(is.numeric(n_iter))
     n_iter <- as.integer(n_iter[1])
+
+    stopifnot(is.character(adj_method))
 
     ## type compatibility checks ----------
 
@@ -331,30 +364,16 @@
 
     ## calculation of the kappas -------
 
-    if(type == "permutation") {
-
-      res <- permKappaMtx(as.matrix(x),
-                          as.matrix(y),
-                          method,
-                          alternative,
-                          n_iter)
-
-    } else {
-
-      res <- bootKappaMtx(as.matrix(x),
-                          as.matrix(y),
-                          method,
-                          ci_type,
-                          conf_level,
-                          n_iter)
-
-    }
-
-    rownames(res) <- x_colnames
-
-    if(!as_data_frame) return(res)
-
-    rownames_to_column(as.data.frame(res), "variable")
+    f_kappa_test(x = as.matrix(x),
+                 y = as.matrix(y),
+                 type = type,
+                 method = method,
+                 alternative = alternative,
+                 ci_type = ci_type,
+                 conf_level = conf_level,
+                 as_data_frame = as_data_frame,
+                 n_iter = n_iter,
+                 adj_method = adj_method)
 
   }
 

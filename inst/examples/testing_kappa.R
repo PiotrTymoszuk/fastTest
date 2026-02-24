@@ -63,19 +63,21 @@
   f_kappa_test(tst_x, tst_y,
                type = "bootstrap")
 
-  f_kappa_test(mtx_x, mtx_y, alternative = "less")
-  f_kappa_test(mtx_x, mtx_y, type = "bootstrap", as_data_frame = TRUE)
+  f_kappa_test(mtx_x, mtx_y, alternative = "less", adj_method = "BH")
+  f_kappa_test(mtx_x, mtx_y, type = "bootstrap", as_data_frame = TRUE, adj_method = "BH")
 
 
   f_kappa_test(map_dfc(as.data.frame(mtx_x), factor),
                map_dfc(as.data.frame(mtx_y), factor),
                method = "fleiss",
-               as_data_frame = TRUE)
+               as_data_frame = TRUE,
+               adj_method = "BH")
 
   f_kappa_test(map_dfc(as.data.frame(mtx_x), factor),
                map_dfc(as.data.frame(mtx_y), factor),
                type = "bootstrap",
                method = "fleiss",
-               as_data_frame = TRUE)
+               as_data_frame = TRUE,
+               adj_method = "none")
 
 # END ---------

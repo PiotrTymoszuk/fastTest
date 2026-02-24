@@ -120,7 +120,6 @@
                 paired = TRUE,
                 alternative = 'two.sided'))
 
-
 # benchmarking -------
 
   ## Welch's T test

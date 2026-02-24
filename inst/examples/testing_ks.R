@@ -9,11 +9,6 @@
 
 # testing data --------
 
-  ## vectors
-
-  tst_x <- c(rpois(n = 100, lambda = 2), NA)
-  tst_y <- c(NA, rnorm(n = 150))
-
   ## a matrix and a splitting factor
 
   mtx <- matrix(c(NA, rpois(n = 998, lambda = 2), NA), ncol = 10)
@@ -30,19 +25,14 @@
 
 # Stats's KS test ----------
 
-  ks.test(tst_x, tst_y, alternative = "two.sided")
-  fastTest:::ksTestCpp(tst_x, tst_y, alternative = "two.sided")
-
-  microbenchmark(ks.test(tst_x, tst_y, alternative = "two.sided", exact = FALSE),
-                 fastTest:::ksTestCpp(tst_x, tst_y, alternative = "two.sided"))
+  f_ks_test(mtx[, 1], f, alternative = "two.sided", as_data_frame = TRUE)
 
   ks.test(split(mtx[, 1], f)[[1]],
           split(mtx[, 1], f)[[2]],
           exact = FALSE)
 
-  fastTest:::ksTestVec(mtx[, 1], f = f)
+  f_ks_test(mtx, f, alternative = "two.sided", as_data_frame = TRUE)
+  f_ks_test(as.data.frame(mtx), f, alternative = "two.sided", as_data_frame = TRUE)
 
-  fastTest:::ksTestMtx(mtx, f)
 
-  fastTest:::ksTest2Mtx(mtx1, mtx2)
 
