@@ -239,7 +239,7 @@ NumericMatrix permCorMtx(NumericMatrix x,
 
       // filling the result matrix
 
-      for(int k = 0; k < 6; ++k) result(resId, k + 2) = resampleResult[k];
+      for(int k = 0; k < resampleResult.length(); ++k) result(resId, k + 2) = resampleResult[k];
 
       resId += 1;
 
@@ -497,7 +497,7 @@ NumericVector bootCorMtx(NumericMatrix x,
 
       // filling the result matrix
 
-      for(int k = 0; k < 9; ++k) result(resId, k + 2) = resampleResult[k];
+      for(int k = 0; k < resampleResult.length(); ++k) result(resId, k + 2) = resampleResult[k];
 
       resId += 1;
 

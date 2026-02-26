@@ -69,15 +69,18 @@
 
   f_kappa(mtx_x[, 1], mtx_x[, 2], "unweighted")
 
-# Permutation tests ---------
+# Permutation and bootstrap tests ---------
+
+  ## for a pair of vectors
 
   f_kappa_test(tst_x, tst_y)
   f_kappa_test(tst_x, tst_y,
                type = "bootstrap")
 
+  ## for a pair of matrices or data frames
+
   f_kappa_test(mtx_x, mtx_y, alternative = "less", adj_method = "BH")
   f_kappa_test(mtx_x, mtx_y, type = "bootstrap", as_data_frame = TRUE, adj_method = "BH")
-
 
   f_kappa_test(map_dfc(as.data.frame(mtx_x), factor),
                map_dfc(as.data.frame(mtx_y), factor),
@@ -90,6 +93,32 @@
                type = "bootstrap",
                method = "fleiss",
                as_data_frame = TRUE,
+               adj_method = "none")
+
+  ## for a single matrix or a data frame
+
+  f_kappa_test(mtx_x,
+               alternative = "less",
+               adj_method = "BH")
+
+  f_kappa_test(mtx_x,
+               type = "bootstrap",
+               as_data_frame = FALSE,
+               adj_method = "BH")
+
+  f_kappa_test(map_dfc(as.data.frame(mtx_x),
+                       factor,
+                       levels = c(1:4)),
+               method = "fleiss",
+               as_data_frame = TRUE,
+               adj_method = "BH")
+
+  f_kappa_test(map_dfc(as.data.frame(mtx_x),
+                       factor,
+                       levels = c(1:6)),
+               type = "bootstrap",
+               method = "fleiss",
+               as_data_frame = FALSE,
                adj_method = "none")
 
 # END ---------

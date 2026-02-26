@@ -104,15 +104,71 @@ NumericVector permKappaVec(IntegerVector x,
 
 }
 
+// permutation tests for a single integer matrix
+
+//[[Rcpp::export]]
+
+NumericMatrix permKappaMtx(IntegerMatrix x,
+                           String method = "unweighted",
+                           String alternative = "two.sided",
+                           int n_iter = 1000) {
+
+  // result container
+
+  int n = x.ncol();
+
+  NumericMatrix result(n * n, 8);
+
+  colnames(result) =
+    CharacterVector({"variable1",
+                    "variable2",
+                    "n",
+                    "kappa",
+                    "iter_number",
+                    "h0_number",
+                    "h1_number",
+                    "p_value"});
+
+  // kappa permutation tests
+
+  NumericVector pair_result(6);
+
+  int resId = 0;
+
+  for(int i = 0; i < n; ++i) {
+
+    for(int j = 0; j < n; ++j) {
+
+      // indexes of the tested variables are 1-enumerated as in R
+
+      pair_result = permKappaVec(x(_, i), x(_, j), method, alternative, n_iter);
+
+      result(resId, 0) = 1.0 * i + 1.0;
+      result(resId, 1) = 1.0 * j + 1.0;
+
+      // filling the result matrix
+
+      for(int k = 0; k < pair_result.length(); ++k) result(resId, k + 2) = pair_result[k];
+
+      resId += 1;
+
+    }
+
+  }
+
+  return result;
+
+}
+
 // permutation tests for a pair of integer matrices
 
 // [[Rcpp::export]]
 
-NumericMatrix permKappaMtx(IntegerMatrix x,
-                           IntegerMatrix y,
-                           String method = "unweighted",
-                           String alternative = "two.sided",
-                           int n_iter = 1000) {
+NumericMatrix permKappa2Mtx(IntegerMatrix x,
+                            IntegerMatrix y,
+                            String method = "unweighted",
+                            String alternative = "two.sided",
+                            int n_iter = 1000) {
 
   // result container
 
@@ -251,16 +307,70 @@ NumericVector bootKappaVec(IntegerVector x,
 
 }
 
+// bootstrap tests for a single integer matrix
+
+//[[Rcpp::export]]
+
+NumericMatrix bootKappaMtx(IntegerMatrix x,
+                           String method = "unweighted",
+                           String ci_type = "bca",
+                           double conf_level= 0.95,
+                           int n_iter = 1000) {
+
+  // result container
+
+  int n = x.ncol();
+
+  NumericMatrix result(n * n, 11);
+
+  colnames(result) =
+    CharacterVector({"variable1", "variable2",
+                    "n", "kappa",
+                    "boot_mean", "lower_ci", "upper_ci",
+                    "iter_number", "h0_number", "h1_number",
+                    "p_value"});
+
+  // kappa permutation tests
+
+  NumericVector pair_result(9);
+
+  int resId = 0;
+
+  for(int i = 0; i < n; ++i) {
+
+    for(int j = 0; j < n; ++j) {
+
+      // indexes of the tested variables are 1-enumerated as in R
+
+      pair_result = bootKappaVec(x(_, i), x(_, j), method, ci_type, conf_level, n_iter);
+
+      result(resId, 0) = 1.0 * i + 1.0;
+      result(resId, 1) = 1.0 * j + 1.0;
+
+      // filling the result matrix
+
+      for(int k = 0; k < pair_result.length(); ++k) result(resId, k + 2) = pair_result[k];
+
+      resId += 1;
+
+    }
+
+  }
+
+  return result;
+
+}
+
 // bootstrap tests for a pair of matrices
 
 // [[Rcpp::export]]
 
-NumericMatrix bootKappaMtx(IntegerMatrix x,
-                           IntegerMatrix y,
-                           String method = "unweighted",
-                           String ci_type = "bca",
-                           double conf_level = 0.95,
-                           int n_iter = 1000) {
+NumericMatrix bootKappa2Mtx(IntegerMatrix x,
+                            IntegerMatrix y,
+                            String method = "unweighted",
+                            String ci_type = "bca",
+                            double conf_level = 0.95,
+                            int n_iter = 1000) {
 
   // result container
 

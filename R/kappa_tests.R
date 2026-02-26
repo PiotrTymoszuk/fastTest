@@ -9,9 +9,11 @@
 #' or Cohen's kappa weighted with equally spaced or Fleiss - Cohen weights.
 #'
 #' @details
-#' If `x` and `y` are matrices, the kappas are computed for the corresponding
-#' columns.
+#' If `x` and `y` are matrices or data frames, the kappas are computed for
+#' the corresponding columns.
 #' Hence, these matrices or data frames need to have equal dimensions.
+#' If `x` is a matrix or a data frame and `y = NULL`, the kappas are tested
+#' for all pairs of columns in `x`.
 #' `NA` values are silently removed.
 #'
 #'
@@ -144,7 +146,7 @@
 #' @export
 
   f_kappa_test.matrix <- function(x,
-                                  y,
+                                  y = NULL,
                                   type = c("permutation",
                                            "bootstrap"),
                                   method = c("unweighted", "equal", "fleiss"),
@@ -161,30 +163,36 @@
     ## entry control ----------
 
     stopifnot(is.matrix(x))
-    stopifnot(is.matrix(y))
-
-    if(ncol(x) != ncol(y)) {
-
-      stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
-
-    }
-
-    if(!is.integer(x)) stop("'x' has to be an integer matrix.", call. = FALSE)
-    if(!is.integer(y)) stop("'y' has to be an integer matrix.", call. = FALSE)
-
     x_colnames <- colnames(x)
-    y_colnames <- colnames(y)
+    if(!is.integer(x)) stop("'x' has to be an integer matrix.", call. = FALSE)
 
-    if(!is.null(x_colnames) & !is.null(x_colnames)) {
+    if(!is.null(y)) {
 
-      if(!identical(x_colnames, y_colnames)) {
+      stopifnot(is.matrix(y))
 
-        stop("Column names of 'x' and 'y' differ: incompatible variables.",
-             call. = FALSE)
+      if(ncol(x) != ncol(y)) {
+
+        stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
 
       }
 
-      y <- y[, x_colnames]
+      if(!is.integer(y)) stop("'y' has to be an integer matrix.", call. = FALSE)
+
+      y_colnames <- colnames(y)
+
+      if(!is.null(x_colnames) & !is.null(x_colnames)) {
+
+        if(!identical(x_colnames, y_colnames)) {
+
+          stop("Column names of 'x' and 'y' differ: incompatible variables.",
+               call. = FALSE)
+
+        }
+
+        y <- y[, x_colnames]
+
+      }
+
 
     }
 
@@ -204,40 +212,80 @@
 
     stopifnot(is.character(adj_method))
 
-    ## computation --------
+    ## computation for a pair of matrices --------
+
+    if(!is.null(y)) {
+
+      if(type == "permutation") {
+
+        res <- permKappa2Mtx(x, y, method, alternative, n_iter)
+
+      } else {
+
+        res <- bootKappa2Mtx(x, y, method, ci_type, conf_level, n_iter)
+
+      }
+
+      if(!is.null(x_colnames) & !is.null(x_colnames)) {
+
+        rownames(res) <- x_colnames
+
+      }
+
+      ## p value adjustment and the output
+
+      if(adj_method != "none") {
+
+        p_adjusted <- NULL
+
+        if(type == "permutation") {
+
+          res <- cbind(res,
+                       p_adjusted = p.adjust(res[, 6],
+                                             method = adj_method))
+
+        } else {
+
+          res <- cbind(res,
+                       p_adjusted = p.adjust(res[, 9],
+                                             method = adj_method))
+
+        }
+
+      }
+
+      if(!as_data_frame) return(res)
+
+      return(rownames_to_column(as.data.frame(res), "variable"))
+
+    }
+
+    ## testing for single matrix ----------
 
     if(type == "permutation") {
 
-      res <- permKappaMtx(x, y, method, alternative, n_iter)
+      res <- permKappaMtx(x, method, alternative, n_iter)
 
     } else {
 
-      res <- bootKappaMtx(x, y, method, ci_type, conf_level, n_iter)
+      res <- bootKappaMtx(x, method, ci_type, conf_level, n_iter)
 
     }
 
-    if(!is.null(x_colnames) & !is.null(x_colnames)) {
-
-      rownames(res) <- x_colnames
-
-    }
-
-    ## p value adjustment and the output ------
-
-    if(adj_method != 'none') {
+    if(adj_method != "none") {
 
       p_adjusted <- NULL
 
       if(type == "permutation") {
 
         res <- cbind(res,
-                     p_adjusted = p.adjust(res[, 6],
+                     p_adjusted = p.adjust(res[, 8],
                                            method = adj_method))
 
       } else {
 
         res <- cbind(res,
-                     p_adjusted = p.adjust(res[, 9],
+                     p_adjusted = p.adjust(res[, 11],
                                            method = adj_method))
 
       }
@@ -246,7 +294,12 @@
 
     if(!as_data_frame) return(res)
 
-    rownames_to_column(as.data.frame(res), "variable")
+    res <- as.data.frame(res)
+
+    res[["variable1"]] <- x_colnames[res[["variable1"]]]
+    res[["variable2"]] <- x_colnames[res[["variable2"]]]
+
+    return(res)
 
   }
 
@@ -254,7 +307,7 @@
 #' @export
 
   f_kappa_test.data.frame <- function(x,
-                                      y,
+                                      y = NULL,
                                       type = c("permutation",
                                                "bootstrap"),
                                       method = c("unweighted", "equal", "fleiss"),
@@ -271,25 +324,30 @@
     ## entry control ---------
 
     stopifnot(is.data.frame(x))
-    stopifnot(is.data.frame(y))
-
-    if(ncol(x) != ncol(y)) {
-
-      stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
-
-    }
-
     x_colnames <- colnames(x)
-    y_colnames <- colnames(y)
 
-    if(!identical(x_colnames, y_colnames)) {
+    if(!is.null(y)) {
 
-      stop("Column names of 'x' and 'y' differ: incompatible variables.",
-           call. = FALSE)
+      stopifnot(is.data.frame(y))
+
+      if(ncol(x) != ncol(y)) {
+
+        stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
+
+      }
+
+      y_colnames <- colnames(y)
+
+      if(!identical(x_colnames, y_colnames)) {
+
+        stop("Column names of 'x' and 'y' differ: incompatible variables.",
+             call. = FALSE)
+
+      }
+
+      y <- y[, x_colnames]
 
     }
-
-    y <- y[, x_colnames]
 
     type <- match.arg(type[1], c("permutation", "bootstrap"))
 
@@ -320,22 +378,26 @@
 
     if(all(x_int_check)) x_type <- "integer" else x_type <- "factor"
 
-    y_int_check <- map_lgl(y, is.integer)
-    y_factor_check <- map_lgl(y, is.factor)
+    if(!is.null(y)) {
 
-    if(!(all(y_int_check) | all(y_factor_check))) {
+      y_int_check <- map_lgl(y, is.integer)
+      y_factor_check <- map_lgl(y, is.factor)
 
-      stop("All columns in 'y' have to be factors or integers.", call. = FALSE)
+      if(!(all(y_int_check) | all(y_factor_check))) {
 
-    }
+        stop("All columns in 'y' have to be factors or integers.", call. = FALSE)
 
-    if(all(y_int_check)) y_type <- "integer" else y_type <- "factor"
+      }
 
-    if(y_type != x_type) {
+      if(all(y_int_check)) y_type <- "integer" else y_type <- "factor"
 
-      stop(paste("Incompatible variable types: all columns",
-                 "in 'x' and 'y' have to be either factors or integers."),
-           call. = FALSE)
+      if(y_type != x_type) {
+
+        stop(paste("Incompatible variable types: all columns",
+                   "in 'x' and 'y' have to be either factors or integers."),
+             call. = FALSE)
+
+      }
 
     }
 
@@ -343,29 +405,49 @@
 
     if(x_type == "factor") {
 
-      for(i in 1:ncol(x)) {
+      if(is.null(y)) {
 
-        x_levs <- levels(x[[i]])
-        y_levs <- levels(y[[i]])
+        x_levs <- map(x, levels)
 
-        if(identical(x_levs, y_levs)) next
+        all_levs <- reduce(x_levs, union)
+        cmm_levs <- reduce(x_levs, intersect)
 
-        new_levels <- sort(union(x_levs, y_levs))
+        if(length(setdiff(all_levs, cmm_levs)) > 0) {
 
-        x[[i]] <- factor(x[[i]], new_levels)
-        y[[i]] <- factor(y[[i]], new_levels)
+          stop("Levels of all factor variables in data frame `x` must be identical.",
+               call. = FALSE)
+
+        }
+
+        x <- map_dfc(x, ~as.integer(as.numeric(.x)))
+
+      } else {
+
+        for(i in 1:ncol(x)) {
+
+          x_levs <- levels(x[[i]])
+          y_levs <- levels(y[[i]])
+
+          if(identical(x_levs, y_levs)) next
+
+          new_levels <- sort(union(x_levs, y_levs))
+
+          x[[i]] <- factor(x[[i]], new_levels)
+          y[[i]] <- factor(y[[i]], new_levels)
+
+        }
+
+        x <- map_dfc(x, ~as.integer(as.numeric(.x)))
+        y <- map_dfc(y, ~as.integer(as.numeric(.x)))
 
       }
-
-      x <- map_dfc(x, ~as.integer(as.numeric(.x)))
-      y <- map_dfc(y, ~as.integer(as.numeric(.x)))
 
     }
 
     ## calculation of the kappas -------
 
     f_kappa_test(x = as.matrix(x),
-                 y = as.matrix(y),
+                 y = if(!is.null(y)) as.matrix(y),
                  type = type,
                  method = method,
                  alternative = alternative,

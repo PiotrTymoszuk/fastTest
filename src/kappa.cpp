@@ -24,13 +24,26 @@ NumericVector kappaCpp(IntegerVector x,
 
   int n_col = ctg_mtx.ncol();
 
-  if(n_col < 2) stop("At least two non-NA observations are required");
+  // the output vector and observation number checks
+
+  NumericVector res(2, NA_REAL);
+  res.names() = CharacterVector({"n", "kappa"});
+
+  double ctg_total_freq = mtxTotalSum(ctg_mtx);
+
+  res[0] = ctg_total_freq;
+
+  if(n_col < 2) {
+
+    warning("At least two non-NA observations are required");
+
+    return res;
+
+  }
 
   /// matrix diagonal and margins
 
   NumericVector ctg_diag = mtxDiag(ctg_mtx);
-
-  double ctg_total_freq = mtxTotalSum(ctg_mtx);
 
   NumericVector ctg_row_freq = mtxRowFreq(ctg_mtx);
   NumericVector ctg_col_freq = mtxColFreq(ctg_mtx);
@@ -86,10 +99,6 @@ NumericVector kappaCpp(IntegerVector x,
 
   /// the output vector
 
-  NumericVector res(2);
-  res.names() = CharacterVector({"n", "kappa"});
-
-  res[0] = ctg_total_freq;
   res[1] = (po - pc)/(1 - pc);
 
   return res;

@@ -1,7 +1,7 @@
 Package: fastTest
 Type: Package
 Title: Fast Statistical Hypothesis Testing
-Version: 1.1.0
+Version: 1.1.1
 Maintainer: Piotr Tymoszuk <piotr.s.tymoszuk@gmail.com>
 Author: Who wrote it
 Description: The package provided a medley of basic statistical hypothesis 

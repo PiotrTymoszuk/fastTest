@@ -314,36 +314,12 @@
 
     }
 
-    ## computation of kappas for a pair of data frames --------
+    ## computation of kappas --------
 
-    if(!is.null(y)) {
-
-      res <- kappa2Mtx(as.matrix(x),
-                       as.matrix(y),
-                       method)
-
-      rownames(res) <- x_colnames
-
-      if(!as_data_frame) return(res)
-
-      return(rownames_to_column(as.data.frame(res), "variable"))
-
-    }
-
-    ## computation of kappas for a single data frame -------
-
-    res <- kappaMtx(as.matrix(x), method)
-
-    if(!as_data_frame) return(res)
-
-    res <- as.data.frame(res)
-
-    if(is.null(x_colnames)) return(res)
-
-    res[["variable1"]] <- x_colnames[res[["variable1"]]]
-    res[["variable2"]] <- x_colnames[res[["variable2"]]]
-
-    return(res)
+    f_kappa(x = as.matrix(x),
+            y = if(!is.null(y)) as.matrix(y),
+            method = method,
+            as_data_frame = as_data_frame)
 
   }
 

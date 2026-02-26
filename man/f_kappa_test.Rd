@@ -25,7 +25,7 @@ f_kappa_test(x, ...)
 
 \method{f_kappa_test}{matrix}(
   x,
-  y,
+  y = NULL,
   type = c("permutation", "bootstrap"),
   method = c("unweighted", "equal", "fleiss"),
   alternative = c("two.sided", "less", "greater"),
@@ -39,7 +39,7 @@ f_kappa_test(x, ...)
 
 \method{f_kappa_test}{data.frame}(
   x,
-  y,
+  y = NULL,
   type = c("permutation", "bootstrap"),
   method = c("unweighted", "equal", "fleiss"),
   alternative = c("two.sided", "less", "greater"),
@@ -96,9 +96,11 @@ The function computes permuted and bootstrapped unweighted Cohen's kappa,
 or Cohen's kappa weighted with equally spaced or Fleiss - Cohen weights.
 }
 \details{
-If \code{x} and \code{y} are matrices, the kappas are computed for the corresponding
-columns.
+If \code{x} and \code{y} are matrices or data frames, the kappas are computed for
+the corresponding columns.
 Hence, these matrices or data frames need to have equal dimensions.
+If \code{x} is a matrix or a data frame and \code{y = NULL}, the kappas are tested
+for all pairs of columns in \code{x}.
 \code{NA} values are silently removed.
 }
 \references{

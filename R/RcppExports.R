@@ -89,16 +89,24 @@ permKappaVec <- function(x, y, method = "unweighted", alternative = "two.sided",
     .Call('_fastTest_permKappaVec', PACKAGE = 'fastTest', x, y, method, alternative, n_iter)
 }
 
-permKappaMtx <- function(x, y, method = "unweighted", alternative = "two.sided", n_iter = 1000L) {
-    .Call('_fastTest_permKappaMtx', PACKAGE = 'fastTest', x, y, method, alternative, n_iter)
+permKappaMtx <- function(x, method = "unweighted", alternative = "two.sided", n_iter = 1000L) {
+    .Call('_fastTest_permKappaMtx', PACKAGE = 'fastTest', x, method, alternative, n_iter)
+}
+
+permKappa2Mtx <- function(x, y, method = "unweighted", alternative = "two.sided", n_iter = 1000L) {
+    .Call('_fastTest_permKappa2Mtx', PACKAGE = 'fastTest', x, y, method, alternative, n_iter)
 }
 
 bootKappaVec <- function(x, y, method = "unweighted", ci_type = "bca", conf_level = 0.95, n_iter = 1000L) {
     .Call('_fastTest_bootKappaVec', PACKAGE = 'fastTest', x, y, method, ci_type, conf_level, n_iter)
 }
 
-bootKappaMtx <- function(x, y, method = "unweighted", ci_type = "bca", conf_level = 0.95, n_iter = 1000L) {
-    .Call('_fastTest_bootKappaMtx', PACKAGE = 'fastTest', x, y, method, ci_type, conf_level, n_iter)
+bootKappaMtx <- function(x, method = "unweighted", ci_type = "bca", conf_level = 0.95, n_iter = 1000L) {
+    .Call('_fastTest_bootKappaMtx', PACKAGE = 'fastTest', x, method, ci_type, conf_level, n_iter)
+}
+
+bootKappa2Mtx <- function(x, y, method = "unweighted", ci_type = "bca", conf_level = 0.95, n_iter = 1000L) {
+    .Call('_fastTest_bootKappa2Mtx', PACKAGE = 'fastTest', x, y, method, ci_type, conf_level, n_iter)
 }
 
 kruskalVec <- function(x, f, crash = TRUE) {
