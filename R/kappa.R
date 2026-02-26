@@ -27,6 +27,8 @@
 #' The method for a pair of matrices or data frames returns
 #' a numeric matrix or a data frame with the numbers of complete observations and
 #' kappa values.
+#' If only one matrix or data frame is provided, i.e. `y = NULL`, kappa
+#' coefficients are computed for all pairs of columns in `x`.
 #' If `as_data_frame = TRUE`, the output is coerced to a data frame, and,
 #' optionally appended with names of variables in matrices or data frames.
 #' Note: because of checks of level compatibility, the function is way faster
@@ -34,8 +36,8 @@
 #'
 #' @param x a factor or integer vector, an integer matrix, or a data frame
 #' with factor or integer columns.
-#' @param y a factor or integer vector, an integer matrix, or a data frame
-#' with factor or integer columns.
+#' @param y `NULL` or a factor or integer vector, an integer matrix, or
+#' a data frame with factor or integer columns.
 #' @param method weighting method: `"unweighted"` (default) returns unweighted kappa,
 #' `"equal"` computes kappas with equally spaced weighting, and `"fleiss"`
 #' calculates kappas with Fleiss - Cohen weights.
@@ -113,7 +115,7 @@
 #' @export
 
   f_kappa.matrix <- function(x,
-                             y,
+                             y = NULL,
                              method = c("unweighted", "equal", "fleiss"),
                              as_data_frame = FALSE,
                              ...) {
@@ -121,22 +123,101 @@
     ## entry control ----------
 
     stopifnot(is.matrix(x))
-    stopifnot(is.matrix(y))
+    if(!is.integer(x)) stop("'x' has to be an integer matrix.", call. = FALSE)
 
-    if(ncol(x) != ncol(y)) {
+    x_colnames <- colnames(x)
 
-      stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
+    if(!is.null(y)) {
+
+      stopifnot(is.matrix(y))
+      if(!is.integer(y)) stop("'y' has to be an integer matrix.", call. = FALSE)
+
+      if(ncol(x) != ncol(y)) {
+
+        stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
+
+      }
+
+      y_colnames <- colnames(y)
+
+      if(!is.null(x_colnames) & !is.null(x_colnames)) {
+
+        if(!identical(x_colnames, y_colnames)) {
+
+          stop("Column names of 'x' and 'y' differ: incompatible variables.",
+               call. = FALSE)
+
+        }
+
+        y <- y[, x_colnames]
+
+      }
 
     }
 
+    method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
 
-    if(!is.integer(x)) stop("'x' has to be an integer matrix.", call. = FALSE)
-    if(!is.integer(y)) stop("'y' has to be an integer matrix.", call. = FALSE)
+    stopifnot(is.logical(as_data_frame))
 
+    ## computation for a pair of matrices --------
+
+    if(!is.null(y)) {
+
+      res <- kappa2Mtx(x, y, method)
+
+      if(!is.null(x_colnames) & !is.null(x_colnames)) {
+
+        rownames(res) <- x_colnames
+
+      }
+
+      if(!as_data_frame) return(res)
+
+      return(rownames_to_column(as.data.frame(res), "variable"))
+
+    }
+
+    ## computation of kappas for a single matrix --------
+
+    res <- kappaMtx(x, method)
+
+    if(!as_data_frame) return(res)
+
+    res <- as.data.frame(res)
+
+    if(is.null(x_colnames)) return(res)
+
+    res[["variable1"]] <- x_colnames[res[["variable1"]]]
+    res[["variable2"]] <- x_colnames[res[["variable2"]]]
+
+    return(res)
+
+  }
+
+#' @rdname f_kappa
+#' @export
+
+  f_kappa.data.frame <- function(x,
+                                 y = NULL,
+                                 method = c("unweighted", "equal", "fleiss"),
+                                 as_data_frame = FALSE, ...) {
+
+    ## entry control ---------
+
+    stopifnot(is.data.frame(x))
     x_colnames <- colnames(x)
-    y_colnames <- colnames(y)
 
-    if(!is.null(x_colnames) & !is.null(x_colnames)) {
+    if(!is.null(y)) {
+
+      stopifnot(is.data.frame(y))
+
+      if(ncol(x) != ncol(y)) {
+
+        stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
+
+      }
+
+      y_colnames <- colnames(y)
 
       if(!identical(x_colnames, y_colnames)) {
 
@@ -148,57 +229,6 @@
       y <- y[, x_colnames]
 
     }
-
-    method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
-
-    stopifnot(is.logical(as_data_frame))
-
-    ## computation --------
-
-    res <- kappaMtx(x, y, method)
-
-    if(!is.null(x_colnames) & !is.null(x_colnames)) {
-
-      rownames(res) <- x_colnames
-
-    }
-
-    if(!as_data_frame) return(res)
-
-    rownames_to_column(as.data.frame(res), "variable")
-
-  }
-
-#' @rdname f_kappa
-#' @export
-
-  f_kappa.data.frame <- function(x,
-                                 y,
-                                 method = c("unweighted", "equal", "fleiss"),
-                                 as_data_frame = FALSE, ...) {
-
-    ## entry control ---------
-
-    stopifnot(is.data.frame(x))
-    stopifnot(is.data.frame(y))
-
-    if(ncol(x) != ncol(y)) {
-
-      stop("'x' and 'y' have must have the same dimensions.", call. = FALSE)
-
-    }
-
-    x_colnames <- colnames(x)
-    y_colnames <- colnames(y)
-
-    if(!identical(x_colnames, y_colnames)) {
-
-      stop("Column names of 'x' and 'y' differ: incompatible variables.",
-           call. = FALSE)
-
-    }
-
-    y <- y[, x_colnames]
 
     method <- match.arg(method[1], c("unweighted", "equal", "fleiss"))
 
@@ -217,22 +247,26 @@
 
     if(all(x_int_check)) x_type <- "integer" else x_type <- "factor"
 
-    y_int_check <- map_lgl(y, is.integer)
-    y_factor_check <- map_lgl(y, is.factor)
+    if(!is.null(y)) {
 
-    if(!(all(y_int_check) | all(y_factor_check))) {
+      y_int_check <- map_lgl(y, is.integer)
+      y_factor_check <- map_lgl(y, is.factor)
 
-      stop("All columns in 'y' have to be factors or integers.", call. = FALSE)
+      if(!(all(y_int_check) | all(y_factor_check))) {
 
-    }
+        stop("All columns in 'y' have to be factors or integers.", call. = FALSE)
 
-    if(all(y_int_check)) y_type <- "integer" else y_type <- "factor"
+      }
 
-    if(y_type != x_type) {
+      if(all(y_int_check)) y_type <- "integer" else y_type <- "factor"
 
-      stop(paste("Incompatible variable types: all columns",
-                 "in 'x' and 'y' have to be either factors or integers."),
-           call. = FALSE)
+      if(y_type != x_type) {
+
+        stop(paste("Incompatible variable types: all columns",
+                   "in 'x' and 'y' have to be either factors or integers."),
+             call. = FALSE)
+
+      }
 
     }
 
@@ -240,36 +274,76 @@
 
     if(x_type == "factor") {
 
-      for(i in 1:ncol(x)) {
+      if(is.null(y)) {
 
-        x_levs <- levels(x[[i]])
-        y_levs <- levels(y[[i]])
+        x_levs <- map(x, levels)
 
-        if(identical(x_levs, y_levs)) next
+        all_levs <- reduce(x_levs, union)
+        cmm_levs <- reduce(x_levs, intersect)
 
-        new_levels <- sort(union(x_levs, y_levs))
+        if(length(setdiff(all_levs, cmm_levs)) > 0) {
 
-        x[[i]] <- factor(x[[i]], new_levels)
-        y[[i]] <- factor(y[[i]], new_levels)
+          stop("Levels of all factor variables in data frame `x` must be identical.",
+               call. = FALSE)
+
+        }
+
+        x <- map_dfc(x, ~as.integer(as.numeric(.x)))
+
+      } else {
+
+        for(i in 1:ncol(x)) {
+
+          x_levs <- levels(x[[i]])
+          y_levs <- levels(y[[i]])
+
+          if(identical(x_levs, y_levs)) next
+
+          new_levels <- sort(union(x_levs, y_levs))
+
+          x[[i]] <- factor(x[[i]], new_levels)
+          y[[i]] <- factor(y[[i]], new_levels)
+
+        }
+
+        x <- map_dfc(x, ~as.integer(as.numeric(.x)))
+        y <- map_dfc(y, ~as.integer(as.numeric(.x)))
+
 
       }
 
-      x <- map_dfc(x, ~as.integer(as.numeric(.x)))
-      y <- map_dfc(y, ~as.integer(as.numeric(.x)))
+    }
+
+    ## computation of kappas for a pair of data frames --------
+
+    if(!is.null(y)) {
+
+      res <- kappa2Mtx(as.matrix(x),
+                       as.matrix(y),
+                       method)
+
+      rownames(res) <- x_colnames
+
+      if(!as_data_frame) return(res)
+
+      return(rownames_to_column(as.data.frame(res), "variable"))
 
     }
 
-    ## computation of kappas --------
+    ## computation of kappas for a single data frame -------
 
-    res <- kappaMtx(as.matrix(x),
-                    as.matrix(y),
-                    method)
-
-    rownames(res) <- x_colnames
+    res <- kappaMtx(as.matrix(x), method)
 
     if(!as_data_frame) return(res)
 
-    rownames_to_column(as.data.frame(res), "variable")
+    res <- as.data.frame(res)
+
+    if(is.null(x_colnames)) return(res)
+
+    res[["variable1"]] <- x_colnames[res[["variable1"]]]
+    res[["variable2"]] <- x_colnames[res[["variable2"]]]
+
+    return(res)
 
   }
 

@@ -77,8 +77,12 @@ kappaCpp <- function(x, y, method) {
     .Call('_fastTest_kappaCpp', PACKAGE = 'fastTest', x, y, method)
 }
 
-kappaMtx <- function(x, y, method) {
-    .Call('_fastTest_kappaMtx', PACKAGE = 'fastTest', x, y, method)
+kappaMtx <- function(x, method) {
+    .Call('_fastTest_kappaMtx', PACKAGE = 'fastTest', x, method)
+}
+
+kappa2Mtx <- function(x, y, method) {
+    .Call('_fastTest_kappa2Mtx', PACKAGE = 'fastTest', x, y, method)
 }
 
 permKappaVec <- function(x, y, method = "unweighted", alternative = "two.sided", n_iter = 1000L) {

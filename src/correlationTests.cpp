@@ -487,7 +487,7 @@ NumericVector bootCorMtx(NumericMatrix x,
 
     for(int j = 0; j < n; ++j) {
 
-      // indexes are coded according to the R scheme
+      // indexes of the tested variables are coded according to the R scheme
 
       resampleResult =
         bootCorVec(x(_, i), x(_, j), method, ci_type, conf_level, n_iter);

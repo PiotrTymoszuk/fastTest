@@ -15,7 +15,7 @@ using namespace Rcpp;
 
 NumericVector kappaCpp(IntegerVector x,
                        IntegerVector y,
-                       String  method) {
+                       String method) {
 
   /// contingency matrix: length checks and NA removal
   /// is done by the internal utility
@@ -96,14 +96,56 @@ NumericVector kappaCpp(IntegerVector x,
 
 }
 
-// Cohen's kappa for a pair of integer matrices
+// Cohen's kappa for a single matrix or a pair of integer matrices
 // the kappas are computed in a column-wise manner
 
 // [[Rcpp::export]]
 
-NumericMatrix kappaMtx(IntegerMatrix x,
-                       IntegerMatrix y,
-                       String method) {
+NumericMatrix kappaMtx(IntegerMatrix x, String method) {
+
+  // result storage
+
+  int n = x.ncol();
+
+  NumericMatrix result(n * n, 4);
+
+  colnames(result) =
+    CharacterVector({"variable1", "variable2", "n", "kappa"});
+
+  // computation of the kappas
+
+  NumericVector pair_result(2);
+
+  int resId = 0;
+
+  for(int i = 0; i < n; ++i) {
+
+    for(int j = 0; j < n; ++j) {
+
+      // indexes of the tested variables are coded according to the R scheme
+
+      pair_result = kappaCpp(x(_, i), x(_, j), method);
+
+      result(resId, 0) = 1.0 * i + 1.0;
+      result(resId, 1) = 1.0 * j + 1.0;
+      result(resId, 2) = pair_result[0];
+      result(resId, 3) = pair_result[1];
+
+      resId += 1;
+
+    }
+
+  }
+
+  return result;
+
+}
+
+// [[Rcpp::export]]
+
+NumericMatrix kappa2Mtx(IntegerMatrix x,
+                        IntegerMatrix y,
+                        String method) {
 
   /// the matrices need to have equal dimensions
 

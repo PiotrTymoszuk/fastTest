@@ -269,15 +269,27 @@ BEGIN_RCPP
 END_RCPP
 }
 // kappaMtx
-NumericMatrix kappaMtx(IntegerMatrix x, IntegerMatrix y, String method);
-RcppExport SEXP _fastTest_kappaMtx(SEXP xSEXP, SEXP ySEXP, SEXP methodSEXP) {
+NumericMatrix kappaMtx(IntegerMatrix x, String method);
+RcppExport SEXP _fastTest_kappaMtx(SEXP xSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< String >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(kappaMtx(x, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// kappa2Mtx
+NumericMatrix kappa2Mtx(IntegerMatrix x, IntegerMatrix y, String method);
+RcppExport SEXP _fastTest_kappa2Mtx(SEXP xSEXP, SEXP ySEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type x(xSEXP);
     Rcpp::traits::input_parameter< IntegerMatrix >::type y(ySEXP);
     Rcpp::traits::input_parameter< String >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(kappaMtx(x, y, method));
+    rcpp_result_gen = Rcpp::wrap(kappa2Mtx(x, y, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -929,7 +941,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_friedmanVec", (DL_FUNC) &_fastTest_friedmanVec, 4},
     {"_fastTest_friedmanMtx", (DL_FUNC) &_fastTest_friedmanMtx, 4},
     {"_fastTest_kappaCpp", (DL_FUNC) &_fastTest_kappaCpp, 3},
-    {"_fastTest_kappaMtx", (DL_FUNC) &_fastTest_kappaMtx, 3},
+    {"_fastTest_kappaMtx", (DL_FUNC) &_fastTest_kappaMtx, 2},
+    {"_fastTest_kappa2Mtx", (DL_FUNC) &_fastTest_kappa2Mtx, 3},
     {"_fastTest_permKappaVec", (DL_FUNC) &_fastTest_permKappaVec, 5},
     {"_fastTest_permKappaMtx", (DL_FUNC) &_fastTest_permKappaMtx, 5},
     {"_fastTest_bootKappaVec", (DL_FUNC) &_fastTest_bootKappaVec, 6},

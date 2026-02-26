@@ -22,8 +22,9 @@
   mtx_y <- matrix(c(NA, sample(1:4, size = 98, replace = TRUE), NA), ncol = 10)
   colnames(mtx_y) <- paste0("variable_", 1:10)
 
-
 # VCD's kappa and fastTest kappa ---------
+
+  ## the default method for a pair of vectors
 
   ctg_tbl <- table(tst_x, tst_y)
 
@@ -37,6 +38,8 @@
   f_kappa(tst_x, tst_y, "fleiss")
 
   f_kappa(mtx_x[, 1], mtx_y[, 1], "unweighted")
+
+  ## pair of matrices of data frames
 
   f_kappa(mtx_x,
           mtx_y,
@@ -56,6 +59,15 @@
           map_dfc(as.data.frame(mtx_y), factor),
           "unweighted",
           as_data_frame = TRUE)
+
+  ## a single matrix or a data frame
+
+  f_kappa(mtx_x, as_data_frame = TRUE)
+  f_kappa(as.data.frame(mtx_x), as_data_frame = TRUE)
+  f_kappa(map_dfc(as.data.frame(mtx_x), factor, levels = c(1:6)),
+          as_data_frame = TRUE)
+
+  f_kappa(mtx_x[, 1], mtx_x[, 2], "unweighted")
 
 # Permutation tests ---------
 

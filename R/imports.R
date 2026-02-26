@@ -16,6 +16,7 @@
 #' @importFrom purrr map_dbl
 #' @importFrom purrr map_dfc
 #' @importFrom purrr map_lgl
+#' @importFrom purrr reduce
 #' @importFrom purrr compact
 #'
 #' @importFrom future plan

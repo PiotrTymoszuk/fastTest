@@ -19,7 +19,7 @@ f_kappa(x, ...)
 
 \method{f_kappa}{matrix}(
   x,
-  y,
+  y = NULL,
   method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
   ...
@@ -27,7 +27,7 @@ f_kappa(x, ...)
 
 \method{f_kappa}{data.frame}(
   x,
-  y,
+  y = NULL,
   method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
   ...
@@ -39,8 +39,8 @@ with factor or integer columns.}
 
 \item{...}{additional arguments passed to methods.}
 
-\item{y}{a factor or integer vector, an integer matrix, or a data frame
-with factor or integer columns.}
+\item{y}{\code{NULL} or a factor or integer vector, an integer matrix, or
+a data frame with factor or integer columns.}
 
 \item{method}{weighting method: \code{"unweighted"} (default) returns unweighted kappa,
 \code{"equal"} computes kappas with equally spaced weighting, and \code{"fleiss"}
@@ -54,6 +54,8 @@ with the number of complete observations and kappa value.
 The method for a pair of matrices or data frames returns
 a numeric matrix or a data frame with the numbers of complete observations and
 kappa values.
+If only one matrix or data frame is provided, i.e. \code{y = NULL}, kappa
+coefficients are computed for all pairs of columns in \code{x}.
 If \code{as_data_frame = TRUE}, the output is coerced to a data frame, and,
 optionally appended with names of variables in matrices or data frames.
 Note: because of checks of level compatibility, the function is way faster

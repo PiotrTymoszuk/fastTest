@@ -34,5 +34,4 @@
   f_ks_test(mtx, f, alternative = "two.sided", as_data_frame = TRUE)
   f_ks_test(as.data.frame(mtx), f, alternative = "two.sided", as_data_frame = TRUE)
 
-
-
+# END --------
