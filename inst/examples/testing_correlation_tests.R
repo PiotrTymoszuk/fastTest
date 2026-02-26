@@ -63,7 +63,8 @@
              type = 'permutation',
              method = 'xiB',
              alternative = 'two.sided',
-             n_iter = 100)
+             n_iter = 100,
+             as_data_frame = TRUE)
 
   f_cor_test(test_tbl,
              type = 'bootstrap',

@@ -26,4 +26,8 @@ NumericMatrix mtxConstProd(NumericMatrix x, double d);
 NumericMatrix mtxProduct (NumericMatrix x, NumericMatrix y);
 NumericMatrix constMtxdelta (double d, NumericMatrix x);
 
+// matrix of pairs of elements of a sequence of [0, n) elements
+
+IntegerMatrix intPairs(int n);
+
 #endif // __matrixUtils__

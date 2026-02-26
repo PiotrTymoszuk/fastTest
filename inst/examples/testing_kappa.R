@@ -99,7 +99,8 @@
 
   f_kappa_test(mtx_x,
                alternative = "less",
-               adj_method = "BH")
+               adj_method = "BH",
+               as_data_frame = TRUE)
 
   f_kappa_test(mtx_x,
                type = "bootstrap",
@@ -109,7 +110,6 @@
   f_kappa_test(map_dfc(as.data.frame(mtx_x),
                        factor,
                        levels = c(1:4)),
-               method = "fleiss",
                as_data_frame = TRUE,
                adj_method = "BH")
 

@@ -116,7 +116,10 @@ NumericMatrix kappaMtx(IntegerMatrix x, String method) {
 
   int n = x.ncol();
 
-  NumericMatrix result(n * n, 4);
+  IntegerMatrix index_pairs = intPairs(n);
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 4);
 
   colnames(result) =
     CharacterVector({"variable1", "variable2", "n", "kappa"});
@@ -125,24 +128,18 @@ NumericMatrix kappaMtx(IntegerMatrix x, String method) {
 
   NumericVector pair_result(2);
 
-  int resId = 0;
+  IntegerVector idx(2);
 
-  for(int i = 0; i < n; ++i) {
+  for(int i = 0; i < n_pairs; ++i) {
 
-    for(int j = 0; j < n; ++j) {
+    idx = index_pairs(i, _);
 
-      // indexes of the tested variables are coded according to the R scheme
+    pair_result = kappaCpp(x(_, idx[0]), x(_, idx[1]), method);
 
-      pair_result = kappaCpp(x(_, i), x(_, j), method);
-
-      result(resId, 0) = 1.0 * i + 1.0;
-      result(resId, 1) = 1.0 * j + 1.0;
-      result(resId, 2) = pair_result[0];
-      result(resId, 3) = pair_result[1];
-
-      resId += 1;
-
-    }
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
+    result(i, 2) = pair_result[0];
+    result(i, 3) = pair_result[1];
 
   }
 

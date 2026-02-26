@@ -9,6 +9,7 @@
 #include "transformUtils.h"
 #include "rankUtils.h"
 #include "covariance.h"
+#include "matrixUtils.h"
 
 using namespace Rcpp;
 
@@ -210,7 +211,10 @@ NumericMatrix permCorMtx(NumericMatrix x,
 
   int n = x.ncol();
 
-  NumericMatrix result(n * n, 8);
+  IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 8);
 
   colnames(result) =
     CharacterVector::create("variable1", "variable2",
@@ -222,28 +226,22 @@ NumericMatrix permCorMtx(NumericMatrix x,
   // correlation tests
 
   NumericVector resampleResult(6);
+  IntegerVector idx(2);
 
-  int resId = 0;
+  for(int i = 0; i < n_pairs; i++) {
 
-  for(int i = 0; i < n; ++i) {
+    idx = index_pairs(i, _);
 
-    for(int j = 0; j < n; ++j) {
+    resampleResult =
+      permCorVec(x(_, idx[0]), x(_, idx[1]),
+                 method, alternative, n_iter);
 
-      // indexes are coded according to the R scheme
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
 
-      resampleResult =
-        permCorVec(x(_, i), x(_, j), method, alternative, n_iter);
+    // filling the result matrix
 
-      result(resId, 0) = 1.0 * i + 1.0;
-      result(resId, 1) = 1.0 * j + 1.0;
-
-      // filling the result matrix
-
-      for(int k = 0; k < resampleResult.length(); ++k) result(resId, k + 2) = resampleResult[k];
-
-      resId += 1;
-
-    }
+    for(int k = 0; k < resampleResult.length(); ++k) result(i, k + 2) = resampleResult[k];
 
   }
 
@@ -468,7 +466,10 @@ NumericVector bootCorMtx(NumericMatrix x,
 
   int n = x.ncol();
 
-  NumericMatrix result(n * n, 11);
+  IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 11);
 
   colnames(result) =
     CharacterVector::create("variable1", "variable2",
@@ -480,28 +481,22 @@ NumericVector bootCorMtx(NumericMatrix x,
   // correlation tests
 
   NumericVector resampleResult(9);
+  IntegerVector idx(2);
 
-  int resId = 0;
+  for(int i = 0; i < n_pairs; ++i) {
 
-  for(int i = 0; i < n; ++i) {
+    idx = index_pairs(i, _);
 
-    for(int j = 0; j < n; ++j) {
+    resampleResult =
+      bootCorVec(x(_, idx[0]), x(_, idx[1]),
+                 method, ci_type, conf_level, n_iter);
 
-      // indexes of the tested variables are coded according to the R scheme
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
 
-      resampleResult =
-        bootCorVec(x(_, i), x(_, j), method, ci_type, conf_level, n_iter);
+    // filling the result matrix
 
-      result(resId, 0) = 1.0 * i + 1.0;
-      result(resId, 1) = 1.0 * j + 1.0;
-
-      // filling the result matrix
-
-      for(int k = 0; k < resampleResult.length(); ++k) result(resId, k + 2) = resampleResult[k];
-
-      resId += 1;
-
-    }
+    for(int k = 0; k < resampleResult.length(); ++k) result(i, k + 2) = resampleResult[k];
 
   }
 

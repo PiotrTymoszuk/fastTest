@@ -10,6 +10,7 @@
 #include "rankUtils.h"
 #include "covariance.h"
 #include "kappa.h"
+#include "matrixUtils.h"
 
 using namespace Rcpp;
 
@@ -115,9 +116,12 @@ NumericMatrix permKappaMtx(IntegerMatrix x,
 
   // result container
 
-  int n = x.ncol();
+  int n = x.ncol(); /// number of variables
 
-  NumericMatrix result(n * n, 8);
+  IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 8);
 
   colnames(result) =
     CharacterVector({"variable1",
@@ -132,27 +136,22 @@ NumericMatrix permKappaMtx(IntegerMatrix x,
   // kappa permutation tests
 
   NumericVector pair_result(6);
+  IntegerVector idx(2);
 
-  int resId = 0;
+  for(int i = 0; i < n_pairs; i++) {
 
-  for(int i = 0; i < n; ++i) {
+    idx = index_pairs(i, _);
 
-    for(int j = 0; j < n; ++j) {
+    pair_result =
+      permKappaVec(x(_, idx[0]), x(_, idx[1]),
+                   method, alternative, n_iter);
 
-      // indexes of the tested variables are 1-enumerated as in R
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
 
-      pair_result = permKappaVec(x(_, i), x(_, j), method, alternative, n_iter);
+    // filling the result matrix
 
-      result(resId, 0) = 1.0 * i + 1.0;
-      result(resId, 1) = 1.0 * j + 1.0;
-
-      // filling the result matrix
-
-      for(int k = 0; k < pair_result.length(); ++k) result(resId, k + 2) = pair_result[k];
-
-      resId += 1;
-
-    }
+    for(int k = 0; k < pair_result.length(); ++k) result(i, k + 2) = pair_result[k];
 
   }
 
@@ -321,7 +320,10 @@ NumericMatrix bootKappaMtx(IntegerMatrix x,
 
   int n = x.ncol();
 
-  NumericMatrix result(n * n, 11);
+  IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 11);
 
   colnames(result) =
     CharacterVector({"variable1", "variable2",
@@ -333,27 +335,22 @@ NumericMatrix bootKappaMtx(IntegerMatrix x,
   // kappa permutation tests
 
   NumericVector pair_result(9);
+  IntegerVector idx(2);
 
-  int resId = 0;
+  for(int i = 0; i < n_pairs; ++i) {
 
-  for(int i = 0; i < n; ++i) {
+    idx = index_pairs(i, _);
 
-    for(int j = 0; j < n; ++j) {
+    pair_result =
+      bootKappaVec(x(_, idx[0]), x(_, idx[1]),
+                   method, ci_type, conf_level, n_iter);
 
-      // indexes of the tested variables are 1-enumerated as in R
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
 
-      pair_result = bootKappaVec(x(_, i), x(_, j), method, ci_type, conf_level, n_iter);
+    // filling the result matrix
 
-      result(resId, 0) = 1.0 * i + 1.0;
-      result(resId, 1) = 1.0 * j + 1.0;
-
-      // filling the result matrix
-
-      for(int k = 0; k < pair_result.length(); ++k) result(resId, k + 2) = pair_result[k];
-
-      resId += 1;
-
-    }
+    for(int k = 0; k < pair_result.length(); ++k) result(i, k + 2) = pair_result[k];
 
   }
 

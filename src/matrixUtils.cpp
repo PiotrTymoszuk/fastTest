@@ -186,4 +186,35 @@ NumericMatrix constMtxdelta (double d, NumericMatrix x) {
 
 }
 
+// matrix pairs of elements of a sequence of [0, n) elements,
+// to be used by pairwise tests
+
+IntegerMatrix intPairs(int n) {
+
+  // result container total number of pairs
+
+  int n_pairs = n * (n - 1) / 2;
+  int k = 0; //counter for pairs
+
+  IntegerMatrix res(n_pairs, 2);
+
+  // filling the container matrix
+
+  for(int i = 0; i < n; ++i) {
+
+    for(int j = i + 1; j < n; ++j) {
+
+      res(k, 0) = i;
+      res(k, 1) = j;
+
+      k += 1;
+
+    }
+
+  }
+
+  return res;
+
+}
+
 // END
