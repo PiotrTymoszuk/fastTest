@@ -5,6 +5,8 @@
 #'
 #' @description
 #' Rcpp implementations of the two-sample Kolmogorov-Smirnov test.
+#' Matrices and data frames: if `f = NULL`, pairwise Kolmogorov-Smirnov tests
+#' for differences in distribution between the columns are performed.
 #'
 #' @return
 #' A numeric vector, a matrix, or a data frame (if `as_data_frame = TRUE`) with
@@ -69,7 +71,7 @@
 #' @export
 
   f_ks_test.matrix <- function(x,
-                               f,
+                               f = NULL,
                                alternative = c("two.sided", "greater", "less"),
                                as_data_frame = FALSE,
                                adj_method = "none",
@@ -80,13 +82,19 @@
     stopifnot(is.matrix(x))
     stopifnot(is.numeric(x))
 
-    if(!is.integer(f) & !is.factor(f)) {
+    x_colnames <- colnames(x)
 
-      stop("'f' has to be a factor or integer vector.", call. = FALSE)
+    if(!is.null(f)) {
+
+      if(!is.integer(f) & !is.factor(f)) {
+
+        stop("'f' has to be a factor or integer vector.", call. = FALSE)
+
+      }
+
+      if(is.factor(f)) f <- as.integer(f)
 
     }
-
-    if(is.factor(f)) f <- as.integer(f)
 
     alternative = match.arg(alternative[1],
                             c('two.sided', 'less', 'greater'))
@@ -96,7 +104,15 @@
 
     ## hypothesis testing -------
 
-    result <- ksTestMtx(x, f, alternative)
+    if(is.null(f)) {
+
+      result <- ksTestPairMtx(x, alternative)
+
+    } else {
+
+      result <- ksTestMtx(x, f, alternative)
+
+    }
 
     if(adj_method != 'none') {
 
@@ -112,7 +128,20 @@
 
     result <- as.data.frame(result)
 
-    result <- rownames_to_column(result, 'variable')
+    if(is.null(f)) {
+
+      if(!is.null(x_colnames)) {
+
+        result[["variable1"]] <- x_colnames[result[["variable1"]]]
+        result[["variable2"]] <- x_colnames[result[["variable2"]]]
+
+      }
+
+    } else {
+
+      result <- rownames_to_column(result, 'variable')
+
+    }
 
     result[["ties"]] <- result[["ties"]] == 1
 
@@ -124,7 +153,7 @@
 #' @export
 
   f_ks_test.data.frame <- function(x,
-                                   f,
+                                   f = NULL,
                                    alternative = c("two.sided", "greater", "less"),
                                    as_data_frame = FALSE,
                                    adj_method = "none",

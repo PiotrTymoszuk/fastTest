@@ -133,6 +133,10 @@ ksTest2Mtx <- function(x, y, alternative = "two.sided") {
     .Call('_fastTest_ksTest2Mtx', PACKAGE = 'fastTest', x, y, alternative)
 }
 
+ksTestPairMtx <- function(x, alternative = "two.sided") {
+    .Call('_fastTest_ksTestPairMtx', PACKAGE = 'fastTest', x, alternative)
+}
+
 leveneBase <- function(x, type = "standard") {
     .Call('_fastTest_leveneBase', PACKAGE = 'fastTest', x, type)
 }

@@ -19,7 +19,7 @@ f_ks_test(x, ...)
 
 \method{f_ks_test}{matrix}(
   x,
-  f,
+  f = NULL,
   alternative = c("two.sided", "greater", "less"),
   as_data_frame = FALSE,
   adj_method = "none",
@@ -28,7 +28,7 @@ f_ks_test(x, ...)
 
 \method{f_ks_test}{data.frame}(
   x,
-  f,
+  f = NULL,
   alternative = c("two.sided", "greater", "less"),
   as_data_frame = FALSE,
   adj_method = "none",
@@ -63,4 +63,6 @@ In matrices and data frames, the testing is done column-wise.
 }
 \description{
 Rcpp implementations of the two-sample Kolmogorov-Smirnov test.
+Matrices and data frames: if \code{f = NULL}, pairwise Kolmogorov-Smirnov tests
+for differences in distribution between the columns are performed.
 }

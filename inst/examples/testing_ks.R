@@ -25,6 +25,8 @@
 
 # Stats's KS test ----------
 
+  ## a vector or a matrix and a splitting factor
+
   f_ks_test(mtx[, 1], f, alternative = "two.sided", as_data_frame = TRUE)
 
   ks.test(split(mtx[, 1], f)[[1]],
@@ -33,5 +35,13 @@
 
   f_ks_test(mtx, f, alternative = "two.sided", as_data_frame = TRUE)
   f_ks_test(as.data.frame(mtx), f, alternative = "two.sided", as_data_frame = TRUE)
+
+  ## pairwise KS tests for matrix columns
+
+  f_ks_test(mtx, as_data_frame = TRUE)
+  f_ks_test(as.data.frame(mtx), as_data_frame = TRUE)
+
+  colnames(mtx) <- NULL
+  f_ks_test(as.data.frame(mtx), as_data_frame = TRUE)
 
 # END --------

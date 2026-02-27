@@ -5,6 +5,7 @@
 #include "vectorUtils.h"
 #include "transformUtils.h"
 #include "numericUtils.h"
+#include "matrixUtils.h"
 
 using namespace Rcpp;
 
@@ -140,7 +141,7 @@ NumericMatrix ksTestMtx(NumericMatrix x,
 
 }
 
-// ... and for two numeric matrices, column and row names management
+// ... for two numeric matrices, column and row names management
 // and extended checks are done by the R function
 
 //[[Rcpp::export]]
@@ -171,6 +172,53 @@ NumericMatrix ksTest2Mtx(NumericMatrix x,
   }
 
   return resMtx;
+
+}
+
+// ... for pairwise comparisons of distributions of all variables
+// in a matrix
+
+//[[Rcpp::export]]
+
+NumericMatrix ksTestPairMtx(NumericMatrix x,
+                            String alternative = "two.sided") {
+
+  // pair indexes and the result container
+
+  int n = x.ncol();
+
+  IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix res(n_pairs, 7);
+
+  colnames(res) =
+    CharacterVector({"variable1", "variable2",
+                    "n1", "n2", "ties", "d", "p_value"});
+
+  // correlation tests
+
+  NumericVector row_res(5);
+  IntegerVector idx(2);
+
+  for(int i = 0; i < n_pairs; ++i) {
+
+    /// indexes of the variables according to the R's scheme
+
+    idx = index_pairs(i, _);
+
+    row_res = ksTestCpp(x(_, idx[0]), x(_, idx[1]), alternative);
+
+    res(i, 0) = 1.0 * idx[0] + 1.0;
+    res(i, 1) = 1.0 * idx[1] + 1.0;
+
+    // filling the result matrix
+
+    for(int k = 0; k < row_res.length(); ++k) res(i, k + 2) = row_res[k];
+
+  }
+
+  return res;
 
 }
 

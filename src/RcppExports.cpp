@@ -462,6 +462,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ksTestPairMtx
+NumericMatrix ksTestPairMtx(NumericMatrix x, String alternative);
+RcppExport SEXP _fastTest_ksTestPairMtx(SEXP xSEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ksTestPairMtx(x, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
 // leveneBase
 NumericVector leveneBase(List x, String type);
 RcppExport SEXP _fastTest_leveneBase(SEXP xSEXP, SEXP typeSEXP) {
@@ -984,6 +996,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_ksTestVec", (DL_FUNC) &_fastTest_ksTestVec, 3},
     {"_fastTest_ksTestMtx", (DL_FUNC) &_fastTest_ksTestMtx, 3},
     {"_fastTest_ksTest2Mtx", (DL_FUNC) &_fastTest_ksTest2Mtx, 3},
+    {"_fastTest_ksTestPairMtx", (DL_FUNC) &_fastTest_ksTestPairMtx, 2},
     {"_fastTest_leveneBase", (DL_FUNC) &_fastTest_leveneBase, 2},
     {"_fastTest_leveneVec", (DL_FUNC) &_fastTest_leveneVec, 4},
     {"_fastTest_leveneMtx", (DL_FUNC) &_fastTest_leveneMtx, 4},
