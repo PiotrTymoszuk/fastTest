@@ -18,6 +18,7 @@
 #' @importFrom purrr map_lgl
 #' @importFrom purrr reduce
 #' @importFrom purrr compact
+#' @importFrom purrr pmap_dbl
 #'
 #' @importFrom future plan
 #' @importFrom future availableCores

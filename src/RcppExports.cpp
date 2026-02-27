@@ -669,20 +669,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// pSmirnov
-NumericVector pSmirnov(double q, double n1, double n2, String alternative);
-RcppExport SEXP _fastTest_pSmirnov(SEXP qSEXP, SEXP n1SEXP, SEXP n2SEXP, SEXP alternativeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type q(qSEXP);
-    Rcpp::traits::input_parameter< double >::type n1(n1SEXP);
-    Rcpp::traits::input_parameter< double >::type n2(n2SEXP);
-    Rcpp::traits::input_parameter< String >::type alternative(alternativeSEXP);
-    rcpp_result_gen = Rcpp::wrap(pSmirnov(q, n1, n2, alternative));
-    return rcpp_result_gen;
-END_RCPP
-}
 // oneAnovaBase
 NumericVector oneAnovaBase(List x);
 RcppExport SEXP _fastTest_oneAnovaBase(SEXP xSEXP) {
@@ -1012,7 +998,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_Quantile", (DL_FUNC) &_fastTest_Quantile, 2},
     {"_fastTest_perCI", (DL_FUNC) &_fastTest_perCI, 2},
     {"_fastTest_BCA", (DL_FUNC) &_fastTest_BCA, 2},
-    {"_fastTest_pSmirnov", (DL_FUNC) &_fastTest_pSmirnov, 4},
     {"_fastTest_oneAnovaBase", (DL_FUNC) &_fastTest_oneAnovaBase, 1},
     {"_fastTest_oneAnovaVec", (DL_FUNC) &_fastTest_oneAnovaVec, 3},
     {"_fastTest_oneAnovaMtx", (DL_FUNC) &_fastTest_oneAnovaMtx, 3},

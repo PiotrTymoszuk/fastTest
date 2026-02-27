@@ -301,16 +301,4 @@ NumericVector BCA(NumericVector theta, double conf_level = 0.95) {
 
 }
 
-// Smirnov distribution
-
-// [[Rcpp::export]]
-
-NumericVector pSmirnov(double q, double n1, double n2, String alternative) {
-
-  Function f("asympt_smirnov");
-
-  return f(q, n1, n2, alternative);
-
-}
-
 // END

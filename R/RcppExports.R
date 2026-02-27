@@ -197,10 +197,6 @@ BCA <- function(theta, conf_level = 0.95) {
     .Call('_fastTest_BCA', PACKAGE = 'fastTest', theta, conf_level)
 }
 
-pSmirnov <- function(q, n1, n2, alternative) {
-    .Call('_fastTest_pSmirnov', PACKAGE = 'fastTest', q, n1, n2, alternative)
-}
-
 oneAnovaBase <- function(x) {
     .Call('_fastTest_oneAnovaBase', PACKAGE = 'fastTest', x)
 }

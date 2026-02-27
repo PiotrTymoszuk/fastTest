@@ -52,6 +52,14 @@
 
     result = ksTestVec(x, f, alternative)
 
+    p_value <- NULL
+
+    result <- c(result,
+                p_value = asympt_smirnov(q = result[["d"]],
+                                         n1 = result[["n1"]],
+                                         n2 = result[["n2"]],
+                                         alternative = alternative))
+
     if(!as_data_frame) return(result)
 
     result <- matrix(result,
@@ -114,14 +122,24 @@
 
     }
 
+    p_value_vec <-
+      pmap_dbl(list(q = result[, "d"],
+                    n1 = result[, "n1"],
+                    n2 = result[, "n2"]),
+               asympt_smirnov,
+               alternative = alternative)
+
+    p_value <- NULL
+
+    result <- cbind(result, p_value = p_value_vec)
+
     if(adj_method != 'none') {
 
       p_adjusted <- NULL
 
       result <- cbind(result,
-                      p_adjusted = p.adjust(result[, 5],
+                      p_adjusted = p.adjust(result[, "p_value"],
                                             method = adj_method))
-
     }
 
     if(!as_data_frame) return(result)

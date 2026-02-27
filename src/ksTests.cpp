@@ -71,15 +71,14 @@ NumericVector ksTestCpp(NumericVector x,
 
   // p value and the output
 
-  double p_value = pSmirnov(d, n_x, n_y, alternative)[0];
+  //double p_value = pSmirnov(d, n_x, n_y, alternative)[0];
 
   NumericVector res = NumericVector::create(n_x,
                                             n_y,
                                             ties,
-                                            d,
-                                            p_value);
+                                            d);
 
-  res.names() = CharacterVector({"n1", "n2", "ties", "d", "p_value"});
+  res.names() = CharacterVector({"n1", "n2", "ties", "d"});
 
   return res;
 
@@ -115,10 +114,10 @@ NumericMatrix ksTestMtx(NumericMatrix x,
 
   int xColSize = x.ncol();
 
-  NumericMatrix resMtx(xColSize, 5);
+  NumericMatrix resMtx(xColSize, 4);
 
   colnames(resMtx) =
-    CharacterVector({"n1", "n2", "ties", "d", "p_value"});
+    CharacterVector({"n1", "n2", "ties", "d"});
 
   for(int i = 0; i < xColSize; ++i) {
 
@@ -160,10 +159,10 @@ NumericMatrix ksTest2Mtx(NumericMatrix x,
 
   int n = x.ncol();
 
-  NumericMatrix resMtx(n, 5);
+  NumericMatrix resMtx(n, 4);
 
   colnames(resMtx) =
-    CharacterVector({"n1", "n2", "ties", "d", "p_value"});
+    CharacterVector({"n1", "n2", "ties", "d"});
 
   for(int i = 0; i < n; ++i) {
 
@@ -190,11 +189,11 @@ NumericMatrix ksTestPairMtx(NumericMatrix x,
   IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
   int n_pairs = index_pairs.nrow();
 
-  NumericMatrix res(n_pairs, 7);
+  NumericMatrix res(n_pairs, 6);
 
   colnames(res) =
     CharacterVector({"variable1", "variable2",
-                    "n1", "n2", "ties", "d", "p_value"});
+                    "n1", "n2", "ties", "d"});
 
   // correlation tests
 
