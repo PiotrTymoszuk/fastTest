@@ -77,6 +77,10 @@ kappaCpp <- function(x, y, method) {
     .Call('_fastTest_kappaCpp', PACKAGE = 'fastTest', x, y, method)
 }
 
+kappaMtxSquare <- function(x, method) {
+    .Call('_fastTest_kappaMtxSquare', PACKAGE = 'fastTest', x, method)
+}
+
 kappaMtx <- function(x, method) {
     .Call('_fastTest_kappaMtx', PACKAGE = 'fastTest', x, method)
 }

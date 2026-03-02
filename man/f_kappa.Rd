@@ -22,6 +22,7 @@ f_kappa(x, ...)
   y = NULL,
   method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
+  as_square_matrix = FALSE,
   ...
 )
 
@@ -30,6 +31,7 @@ f_kappa(x, ...)
   y = NULL,
   method = c("unweighted", "equal", "fleiss"),
   as_data_frame = FALSE,
+  as_square_matrix = FALSE,
   ...
 )
 }
@@ -47,6 +49,9 @@ a data frame with factor or integer columns.}
 calculates kappas with Fleiss - Cohen weights.}
 
 \item{as_data_frame}{logical: should the output be coerced to a data frame?}
+
+\item{as_square_matrix}{logical: should the output be a square matrix? Ignored
+if \code{as_data_frame = TRUE} or \code{y} is provided.}
 }
 \value{
 The default \code{f_kappa()} method for a pair of vectors returns a numeric vector

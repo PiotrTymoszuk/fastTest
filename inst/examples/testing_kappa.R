@@ -63,7 +63,12 @@
   ## a single matrix or a data frame
 
   f_kappa(mtx_x, as_data_frame = TRUE)
+  f_kappa(mtx_x, as_square_matrix = TRUE)
+
+
   f_kappa(as.data.frame(mtx_x), as_data_frame = TRUE)
+  f_kappa(as.data.frame(mtx_x), as_square_matrix = TRUE)
+
   f_kappa(map_dfc(as.data.frame(mtx_x), factor, levels = c(1:6)),
           as_data_frame = TRUE)
 
@@ -101,6 +106,10 @@
                alternative = "less",
                adj_method = "BH",
                as_data_frame = TRUE)
+
+  f_kappa_test(mtx_x,
+               alternative = "less",
+               adj_method = "BH")
 
   f_kappa_test(mtx_x,
                type = "bootstrap",

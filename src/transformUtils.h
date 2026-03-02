@@ -9,6 +9,7 @@ using namespace Rcpp;
 
 bool checkListNames(const List &x);
 LogicalVector checkNames (const NumericMatrix &x);
+LogicalVector IntCheckNames(const IntegerMatrix &x);
 
 // exposed functions for transformation of vectors and matrices
 

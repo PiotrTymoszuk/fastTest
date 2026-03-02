@@ -42,6 +42,8 @@
 #' `"equal"` computes kappas with equally spaced weighting, and `"fleiss"`
 #' calculates kappas with Fleiss - Cohen weights.
 #' @param as_data_frame logical: should the output be coerced to a data frame?
+#' @param as_square_matrix logical: should the output be a square matrix? Ignored
+#' if `as_data_frame = TRUE` or `y` is provided.
 #' @param ... additional arguments passed to methods.
 #'
 #' @export
@@ -118,6 +120,7 @@
                              y = NULL,
                              method = c("unweighted", "equal", "fleiss"),
                              as_data_frame = FALSE,
+                             as_square_matrix = FALSE,
                              ...) {
 
     ## entry control ----------
@@ -179,6 +182,12 @@
 
     ## computation of kappas for a single matrix --------
 
+    ### output as a square matrix of pairwise kappas
+
+    if(!as_data_frame & as_square_matrix) return(kappaMtxSquare(x, method))
+
+    ### output as a long matrix or a data frame
+
     res <- kappaMtx(x, method)
 
     if(!as_data_frame) return(res)
@@ -200,7 +209,8 @@
   f_kappa.data.frame <- function(x,
                                  y = NULL,
                                  method = c("unweighted", "equal", "fleiss"),
-                                 as_data_frame = FALSE, ...) {
+                                 as_data_frame = FALSE,
+                                 as_square_matrix = FALSE, ...) {
 
     ## entry control ---------
 
@@ -319,7 +329,8 @@
     f_kappa(x = as.matrix(x),
             y = if(!is.null(y)) as.matrix(y),
             method = method,
-            as_data_frame = as_data_frame)
+            as_data_frame = as_data_frame,
+            as_square_matrix = as_square_matrix)
 
   }
 

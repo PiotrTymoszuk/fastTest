@@ -2,6 +2,7 @@
 
 #include <Rcpp.h>
 #include <Rmath.h>
+
 #include "contingencyUtils.h"
 #include "vectorUtils.h"
 #include "transformUtils.h"
@@ -107,6 +108,42 @@ NumericVector kappaCpp(IntegerVector x,
 
 // Cohen's kappa for a single matrix or a pair of integer matrices
 // the kappas are computed in a column-wise manner
+
+// [[Rcpp::export]]
+
+NumericMatrix kappaMtxSquare(IntegerMatrix x, String method) {
+
+  // pairwise kappas between the columns
+  // the output is a square matrix
+
+  // result container
+
+  int n = x.ncol();
+
+  NumericMatrix result(n, n);
+
+  if(IntCheckNames(x)[1]) {
+
+    rownames(result) = colnames(x);
+    colnames(result) = colnames(x);
+
+  }
+
+  // covariance
+
+  for(int i = 0; i < n; ++i) {
+
+    for(int j = 0; j < n; ++j) {
+
+      result(i, j) = kappaCpp(x(_, i), x(_, j), method)[1];
+
+    }
+
+  }
+
+  return result;
+
+}
 
 // [[Rcpp::export]]
 

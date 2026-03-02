@@ -24,6 +24,21 @@ LogicalVector checkNames(const NumericMatrix &x) {
 
 }
 
+LogicalVector IntCheckNames(const IntegerMatrix &x) {
+
+  List s = x.attr("dimnames");  // could be nil or list
+
+  LogicalVector res(2, false);
+
+  if(s.length() == 0) return res;
+
+  if(!Rf_isNull(s[0])) res[0] = true;
+  if(!Rf_isNull(s[1])) res[1] = true;
+
+  return res;
+
+}
+
 // checking if a list has names
 
 bool checkListNames(const List &x) {
