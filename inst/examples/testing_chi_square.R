@@ -87,6 +87,7 @@
   chisq.test(test_cont_tbl)
 
   f_chisq_test(num_data$V1, num_data$class, correct = FALSE)
+  f_chisq_test(factor(num_data$V1), num_data$class, correct = FALSE)
   chisq.test(num_data$V1, num_data$class)
 
   test_mtx <- as.matrix(test_tbl)

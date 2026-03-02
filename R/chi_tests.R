@@ -67,7 +67,7 @@
 
     ## entry control ------
 
-    if(!is.numeric(x) & is.factor(x)) {
+    if(!is.numeric(x) & !is.factor(x)) {
 
       stop("'x' has to be a numeric vector or a factor.", call. = FALSE)
 
