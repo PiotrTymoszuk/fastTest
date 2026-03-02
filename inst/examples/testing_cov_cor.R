@@ -72,7 +72,8 @@
       method = 'spearman')
 
   f_cov(test_tbl,
-        method = 'spearman')
+        method = 'spearman',
+        as_data_frame = TRUE)
 
   ## our f_cov function is way slower than the R's genuine
   ## one that was written in C
@@ -115,7 +116,7 @@
   f_cor(test_tbl, method = 'spearman', as_data_frame = TRUE)
 
   cor(test_tbl, use = 'complete.obs', method = 'kendall')
-  f_cor(test_tbl, method = 'kendallB', as_data_frame = TRUE)
+  f_cor(test_tbl, method = 'kendallB', as_data_frame = FALSE)
 
   f_cor(test_tbl, method = 'xiA', as_data_frame = TRUE)
   f_cor(test_tbl, method = 'xiB', as_data_frame = TRUE)

@@ -131,7 +131,7 @@
 
     res <- CovMtx(x, method)
 
-    if(as_data_frame) return(res)
+    if(!as_data_frame) return(res)
 
     res <- as.data.frame(res)
 
