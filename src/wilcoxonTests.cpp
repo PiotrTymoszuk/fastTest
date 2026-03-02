@@ -37,6 +37,8 @@ using namespace Rcpp;
 // the argument hl_estimate allows for computation of Hedges-Lehman estimates
 // which may be however lengthy for large samples!!!
 
+// [[Rcpp::export]]
+
 NumericVector biserialR(NumericVector x,
                         IntegerVector f,
                         bool paired = false,
@@ -64,16 +66,6 @@ NumericVector biserialR(NumericVector x,
   if(f_cats.length() < 2) {
 
     warning("Only one strata present");
-
-    result[0] = 1;
-
-    return result;
-
-  }
-
-  if(f_cats.length() > 2) {
-
-    warning("More than two strata present");
 
     result[0] = 1;
 

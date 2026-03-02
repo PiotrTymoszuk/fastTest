@@ -929,6 +929,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// biserialR
+NumericVector biserialR(NumericVector x, IntegerVector f, bool paired, bool hl_estimate);
+RcppExport SEXP _fastTest_biserialR(SEXP xSEXP, SEXP fSEXP, SEXP pairedSEXP, SEXP hl_estimateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type f(fSEXP);
+    Rcpp::traits::input_parameter< bool >::type paired(pairedSEXP);
+    Rcpp::traits::input_parameter< bool >::type hl_estimate(hl_estimateSEXP);
+    rcpp_result_gen = Rcpp::wrap(biserialR(x, f, paired, hl_estimate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // testWilcoxonVec
 NumericVector testWilcoxonVec(NumericVector x, IntegerVector f, String type, String alternative, bool exact, bool correct, bool hl_estimate, bool crash);
 RcppExport SEXP _fastTest_testWilcoxonVec(SEXP xSEXP, SEXP fSEXP, SEXP typeSEXP, SEXP alternativeSEXP, SEXP exactSEXP, SEXP correctSEXP, SEXP hl_estimateSEXP, SEXP crashSEXP) {
@@ -1054,6 +1068,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_outerProduct", (DL_FUNC) &_fastTest_outerProduct, 3},
     {"_fastTest_crossProduct", (DL_FUNC) &_fastTest_crossProduct, 2},
     {"_fastTest_order_", (DL_FUNC) &_fastTest_order_, 1},
+    {"_fastTest_biserialR", (DL_FUNC) &_fastTest_biserialR, 4},
     {"_fastTest_testWilcoxonVec", (DL_FUNC) &_fastTest_testWilcoxonVec, 8},
     {"_fastTest_testWilcoxonStd", (DL_FUNC) &_fastTest_testWilcoxonStd, 8},
     {"_fastTest_testWilcoxonMtx", (DL_FUNC) &_fastTest_testWilcoxonMtx, 8},

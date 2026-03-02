@@ -277,6 +277,10 @@ order_ <- function(x) {
     .Call('_fastTest_order_', PACKAGE = 'fastTest', x)
 }
 
+biserialR <- function(x, f, paired = FALSE, hl_estimate = FALSE) {
+    .Call('_fastTest_biserialR', PACKAGE = 'fastTest', x, f, paired, hl_estimate)
+}
+
 testWilcoxonVec <- function(x, f, type = "standard", alternative = "two.sided", exact = FALSE, correct = TRUE, hl_estimate = FALSE, crash = TRUE) {
     .Call('_fastTest_testWilcoxonVec', PACKAGE = 'fastTest', x, f, type, alternative, exact, correct, hl_estimate, crash)
 }

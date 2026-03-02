@@ -164,7 +164,11 @@
                                     alternative = 'two.sided',
                                     correct = TRUE)))
 
+# More than two categories -------
 
+  my_cars <- as_tibble(MASS::Cars93)
 
+  f_wilcox_test(my_cars[["Price"]],
+                f = my_cars[["Type"]])
 
 # END -------
