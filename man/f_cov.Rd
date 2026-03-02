@@ -21,9 +21,21 @@ f_cor(x, ...)
 
 \method{f_cov}{list}(x, method = c("pearson", "spearman"), ...)
 
-\method{f_cov}{matrix}(x, method = c("pearson", "spearman"), ...)
+\method{f_cov}{matrix}(
+  x,
+  method = c("pearson", "spearman"),
+  as_data_frame = FALSE,
+  as_square_matrix = FALSE,
+  ...
+)
 
-\method{f_cov}{data.frame}(x, method = c("pearson", "spearman"), ...)
+\method{f_cov}{data.frame}(
+  x,
+  method = c("pearson", "spearman"),
+  as_data_frame = FALSE,
+  as_square_matrix = FALSE,
+  ...
+)
 
 \method{f_cor}{default}(
   x,
@@ -42,29 +54,44 @@ f_cor(x, ...)
 \method{f_cor}{matrix}(
   x,
   method = c("pearson", "spearman", "kendallA", "kendallB", "xiA", "xiB"),
+  as_data_frame = FALSE,
+  as_square_matrix = FALSE,
   ...
 )
 
 \method{f_cor}{data.frame}(
   x,
   method = c("pearson", "spearman", "kendallA", "kendallB", "xiA", "xiB"),
+  as_data_frame = FALSE,
+  as_square_matrix = FALSE,
   ...
 )
 }
 \arguments{
 \item{x}{a numeric vector, a list of numeric vectors, matrix or a data frame.}
 
-\item{...}{extra arguments passed to methods.}
+\item{...}{additional arguments passed to methods.}
 
 \item{y}{a numeric vector.}
 
 \item{method}{type of covariance or correlation to be analyzed:
 Pearson's r (default), Spearman's rho, Kendall's TauA, Kendall's TauB,
 Chatterjee's Xi (xiA: no assumption on ties, xiB: tie correction included).}
+
+\item{as_data_frame}{logical: should the output be coerced to a data frame?}
+
+\item{as_square_matrix}{logical: should the output be a square matrix? Ignored
+if \code{as_data_frame = TRUE}.}
 }
 \value{
 Methods for vectors and lists return always two-element numeric vector with
 the number of complete observations and the requested coefficient.
+If \code{as_data_frame = TRUE}, the output is a data frame with variable indexes or
+names (if present), numbers of complete observations used to compute the
+coefficients of interest, and the covariance/correlation coefficients.
+If \code{as_square_matrix = TRUE}, the output is a numeric matrix with pairwise
+correlation coefficients, like for base R's \code{\link[stats]{cov}} and
+\code{\link[stats]{cor}}.
 }
 \description{
 Alternatives to base R \code{\link[stats]{cov}}

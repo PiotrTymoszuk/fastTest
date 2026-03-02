@@ -9,6 +9,7 @@
 #include "transformUtils.h"
 #include "rankUtils.h"
 #include "covariance.h"
+#include "matrixUtils.h"
 
 using namespace Rcpp;
 
@@ -68,8 +69,10 @@ NumericVector Cov(NumericVector x,
 
 // [[Rcpp::export]]
 
-NumericMatrix CovMtx(NumericMatrix x,
-                     String method = "pearson") {
+NumericMatrix CovMtxSquare(NumericMatrix x,
+                           String method = "pearson") {
+
+  // the output as a square covariance matrix
 
   // result container
 
@@ -93,6 +96,51 @@ NumericMatrix CovMtx(NumericMatrix x,
       result(i, j) = Cov(x(_, i), x(_, j), method)[1];
 
     }
+
+  }
+
+  return result;
+
+}
+
+// [[Rcpp::export]]
+
+NumericMatrix CovMtx(NumericMatrix x,
+                     String method = "pearson") {
+
+  // output as a numeric matrix with variable indexes and numbers
+  // of complete cases
+
+  // result storage
+
+  int n = x.ncol();
+
+  IntegerMatrix index_pairs = intPairs(n);
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 4);
+
+  colnames(result) =
+    CharacterVector({"variable1", "variable2", "n", "cov"});
+
+  // computation of the kappas
+
+  NumericVector pair_result(2);
+
+  IntegerVector idx(2);
+
+  for(int i = 0; i < n_pairs; ++i) {
+
+    // variable indexes follow the 1-numbered R scheme
+
+    idx = index_pairs(i, _);
+
+    pair_result = Cov(x(_, idx[0]), x(_, idx[1]), method);
+
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
+    result(i, 2) = pair_result[0];
+    result(i, 3) = pair_result[1];
 
   }
 
@@ -345,8 +393,10 @@ NumericVector Cor(NumericVector x,
 
 // [[Rcpp::export]]
 
-NumericMatrix CorMtx(NumericMatrix x,
-                     String method = "pearson") {
+NumericMatrix CorMtxSquare(NumericMatrix x,
+                           String method = "pearson") {
+
+  // the output is a square matrix of pairwise correlations
 
   // result container
 
@@ -370,6 +420,51 @@ NumericMatrix CorMtx(NumericMatrix x,
       result(i, j) = Cor(x(_, i), x(_, j), method)[1];
 
     }
+
+  }
+
+  return result;
+
+}
+
+// [[Rcpp::export]]
+
+NumericMatrix CorMtx(NumericMatrix x,
+                     String method = "pearson") {
+
+  // output as a numeric matrix with variable indexes and numbers
+  // of complete cases
+
+  // result storage
+
+  int n = x.ncol();
+
+  IntegerMatrix index_pairs = intPairs(n);
+  int n_pairs = index_pairs.nrow();
+
+  NumericMatrix result(n_pairs, 4);
+
+  colnames(result) =
+    CharacterVector({"variable1", "variable2", "n", "cor"});
+
+  // computation of the kappas
+
+  NumericVector pair_result(2);
+
+  IntegerVector idx(2);
+
+  for(int i = 0; i < n_pairs; ++i) {
+
+    // variable indexes follow the 1-numbered R scheme
+
+    idx = index_pairs(i, _);
+
+    pair_result = Cor(x(_, idx[0]), x(_, idx[1]), method);
+
+    result(i, 0) = 1.0 * idx[0] + 1.0;
+    result(i, 1) = 1.0 * idx[1] + 1.0;
+    result(i, 2) = pair_result[0];
+    result(i, 3) = pair_result[1];
 
   }
 

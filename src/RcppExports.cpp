@@ -159,6 +159,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// CovMtxSquare
+NumericMatrix CovMtxSquare(NumericMatrix x, String method);
+RcppExport SEXP _fastTest_CovMtxSquare(SEXP xSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< String >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(CovMtxSquare(x, method));
+    return rcpp_result_gen;
+END_RCPP
+}
 // CovMtx
 NumericMatrix CovMtx(NumericMatrix x, String method);
 RcppExport SEXP _fastTest_CovMtx(SEXP xSEXP, SEXP methodSEXP) {
@@ -181,6 +193,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
     Rcpp::traits::input_parameter< String >::type method(methodSEXP);
     rcpp_result_gen = Rcpp::wrap(Cor(x, y, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// CorMtxSquare
+NumericMatrix CorMtxSquare(NumericMatrix x, String method);
+RcppExport SEXP _fastTest_CorMtxSquare(SEXP xSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< String >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(CorMtxSquare(x, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -972,8 +996,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fastTest_bootCorVec", (DL_FUNC) &_fastTest_bootCorVec, 6},
     {"_fastTest_bootCorMtx", (DL_FUNC) &_fastTest_bootCorMtx, 5},
     {"_fastTest_Cov", (DL_FUNC) &_fastTest_Cov, 3},
+    {"_fastTest_CovMtxSquare", (DL_FUNC) &_fastTest_CovMtxSquare, 2},
     {"_fastTest_CovMtx", (DL_FUNC) &_fastTest_CovMtx, 2},
     {"_fastTest_Cor", (DL_FUNC) &_fastTest_Cor, 3},
+    {"_fastTest_CorMtxSquare", (DL_FUNC) &_fastTest_CorMtxSquare, 2},
     {"_fastTest_CorMtx", (DL_FUNC) &_fastTest_CorMtx, 2},
     {"_fastTest_setFisher", (DL_FUNC) &_fastTest_setFisher, 4},
     {"_fastTest_setEnrichment", (DL_FUNC) &_fastTest_setEnrichment, 7},

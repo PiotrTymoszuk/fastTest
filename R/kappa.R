@@ -31,6 +31,9 @@
 #' coefficients are computed for all pairs of columns in `x`.
 #' If `as_data_frame = TRUE`, the output is coerced to a data frame, and,
 #' optionally appended with names of variables in matrices or data frames.
+#' if `as_square_matrix = TRUE`, the output is a simple numeric matrix with
+#' kappa statistics for pairs of variables like for base R's
+#' \code{\link[stats]{cov}} and \code{\link[stats]{cor}}.
 #' Note: because of checks of level compatibility, the function is way faster
 #' for integers than factors.
 #'

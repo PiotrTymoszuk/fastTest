@@ -45,12 +45,20 @@ Cov <- function(x, y, method = "pearson") {
     .Call('_fastTest_Cov', PACKAGE = 'fastTest', x, y, method)
 }
 
+CovMtxSquare <- function(x, method = "pearson") {
+    .Call('_fastTest_CovMtxSquare', PACKAGE = 'fastTest', x, method)
+}
+
 CovMtx <- function(x, method = "pearson") {
     .Call('_fastTest_CovMtx', PACKAGE = 'fastTest', x, method)
 }
 
 Cor <- function(x, y, method = "pearson") {
     .Call('_fastTest_Cor', PACKAGE = 'fastTest', x, y, method)
+}
+
+CorMtxSquare <- function(x, method = "pearson") {
+    .Call('_fastTest_CorMtxSquare', PACKAGE = 'fastTest', x, method)
 }
 
 CorMtx <- function(x, method = "pearson") {

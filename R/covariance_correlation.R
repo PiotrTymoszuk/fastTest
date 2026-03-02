@@ -27,13 +27,22 @@
 #' @return
 #' Methods for vectors and lists return always two-element numeric vector with
 #' the number of complete observations and the requested coefficient.
+#' If `as_data_frame = TRUE`, the output is a data frame with variable indexes or
+#' names (if present), numbers of complete observations used to compute the
+#' coefficients of interest, and the covariance/correlation coefficients.
+#' If `as_square_matrix = TRUE`, the output is a numeric matrix with pairwise
+#' correlation coefficients, like for base R's \code{\link[stats]{cov}} and
+#' \code{\link[stats]{cor}}.
 #'
 #' @param x a numeric vector, a list of numeric vectors, matrix or a data frame.
 #' @param y a numeric vector.
 #' @param method type of covariance or correlation to be analyzed:
 #' Pearson's r (default), Spearman's rho, Kendall's TauA, Kendall's TauB,
 #' Chatterjee's Xi (xiA: no assumption on ties, xiB: tie correction included).
-#' @param ... extra arguments passed to methods.
+#' @param as_data_frame logical: should the output be coerced to a data frame?
+#' @param as_square_matrix logical: should the output be a square matrix? Ignored
+#' if `as_data_frame = TRUE`.
+#' @param ... additional arguments passed to methods.
 #'
 #' @export
 
@@ -94,7 +103,11 @@
 #' @export
 
   f_cov.matrix <- function(x,
-                           method = c('pearson', 'spearman'), ...) {
+                           method = c('pearson', 'spearman'),
+                           as_data_frame = FALSE,
+                           as_square_matrix = FALSE, ...) {
+
+    ## input control ---------
 
     stopifnot(is.matrix(x))
 
@@ -105,9 +118,29 @@
 
     }
 
+    x_colnames <- colnames(x)
+
     method = match.arg(method[1], c('pearson', 'spearman'))
 
-    CovMtx(x, method)
+    stopifnot(is.logical(as_data_frame))
+    stopifnot(is.logical(as_square_matrix))
+
+    ## covariance ------
+
+    if(!as_data_frame & as_square_matrix) return(CovMtxSquare(x, method))
+
+    res <- CovMtx(x, method)
+
+    if(as_data_frame) return(res)
+
+    res <- as.data.frame(res)
+
+    if(is.null(x_colnames)) return(res)
+
+    res[["variable1"]] <- x_colnames[res[["variable1"]]]
+    res[["variable2"]] <- x_colnames[res[["variable2"]]]
+
+    return(res)
 
   }
 
@@ -115,9 +148,14 @@
 #' @export
 
   f_cov.data.frame <- function(x,
-                               method = c('pearson', 'spearman'), ...) {
+                               method = c('pearson', 'spearman'),
+                               as_data_frame = FALSE,
+                               as_square_matrix = FALSE, ...) {
 
-    f_cov(as.matrix(x), method)
+    f_cov(as.matrix(x),
+          method,
+          as_data_frame,
+          as_square_matrix)
 
   }
 
@@ -197,7 +235,11 @@
                                       'kendallA',
                                       'kendallB',
                                       'xiA',
-                                      'xiB'), ...) {
+                                      'xiB'),
+                           as_data_frame = FALSE,
+                           as_square_matrix = FALSE, ...) {
+
+    ## the input control -------
 
     stopifnot(is.matrix(x))
 
@@ -208,6 +250,8 @@
 
     }
 
+    x_colnames <- colnames(x)
+
     method = match.arg(method[1],
                        c('pearson',
                          'spearman',
@@ -216,7 +260,34 @@
                          'xiA',
                          'xiB'))
 
-    CorMtx(x, method)
+    stopifnot(is.logical(as_data_frame))
+    stopifnot(is.logical(as_square_matrix))
+
+    ## correlation coefficients ------
+
+    if(!as_data_frame & as_square_matrix) return(CorMtxSquare(x, method))
+
+    if(method %in% c("xiA", "xiB")) {
+
+      warning(paste("Xi correlation coefficients are not symmetric.",
+                    "To compute the whole correlation matrix, please",
+                    "choose `as_data_frame = FALSE` and `as_square_matrix = TRUE`."),
+              call. = FALSE)
+
+    }
+
+    res <- CorMtx(x, method)
+
+    if(!as_data_frame) return(res)
+
+    res <- as.data.frame(res)
+
+    if(is.null(x_colnames)) return(res)
+
+    res[["variable1"]] <- x_colnames[res[["variable1"]]]
+    res[["variable2"]] <- x_colnames[res[["variable2"]]]
+
+    return(res)
 
   }
 
@@ -229,9 +300,14 @@
                                           'kendallA',
                                           'kendallB',
                                           'xiA',
-                                          'xiB'), ...) {
+                                          'xiB'),
+                               as_data_frame = FALSE,
+                               as_square_matrix = FALSE, ...) {
 
-    f_cor(as.matrix(x), method)
+    f_cor(as.matrix(x),
+          method,
+          as_data_frame,
+          as_square_matrix)
 
   }
 

@@ -51,20 +51,39 @@
   cov(num_data$V1, num_data$V6, use = 'complete.obs', method = 'pearson')
   f_cov(num_data$V1, num_data$V6, method = 'pearson')
 
-  cov(num_data$V1, num_data$V6, use = 'complete.obs', method = 'spearman')
-  f_cov(num_data$V1, num_data$V6, method = 'spearman')
+  cov(num_data$V1,
+      num_data$V6,
+      use = 'complete.obs',
+      method = 'spearman')
+
+  f_cov(num_data$V1,
+        num_data$V6,
+        method = 'spearman')
 
   cov(test_tbl, use = 'complete.obs', method = 'pearson')
-  f_cov(test_tbl, method = 'pearson')
 
-  cov(test_tbl, use = 'complete.obs', method = 'spearman')
-  f_cov(test_tbl, method = 'spearman')
+  f_cov(test_tbl,
+        method = 'pearson',
+        as_data_frame = FALSE,
+        as_square_matrix = TRUE)
+
+  cov(test_tbl,
+      use = 'complete.obs',
+      method = 'spearman')
+
+  f_cov(test_tbl,
+        method = 'spearman')
 
   ## our f_cov function is way slower than the R's genuine
   ## one that was written in C
 
-  microbenchmark(cov(test_tbl, use = 'complete.obs', method = 'spearman'),
-                 f_cov(test_tbl, method = 'spearman'))
+  microbenchmark(cov(test_tbl,
+                     use = 'complete.obs',
+                     method = 'spearman'),
+                 f_cov(test_tbl,
+                       method = 'spearman',
+                       as_data_frame = FALSE,
+                       as_square_matrix = TRUE))
 
 # Testing of the correlations -------
 
@@ -87,26 +106,37 @@
   ## data frame or matrix
 
   cor(test_tbl, use = 'complete.obs', method = 'pearson')
-  f_cor(test_tbl, method = 'pearson')
+  f_cor(test_tbl,
+        method = 'pearson',
+        as_data_frame = FALSE,
+        as_square_matrix = TRUE)
 
   cor(test_tbl, use = 'complete.obs', method = 'spearman')
-  f_cor(test_tbl, method = 'spearman')
+  f_cor(test_tbl, method = 'spearman', as_data_frame = TRUE)
 
   cor(test_tbl, use = 'complete.obs', method = 'kendall')
-  f_cor(test_tbl, method = 'kendallB')
+  f_cor(test_tbl, method = 'kendallB', as_data_frame = TRUE)
 
-  f_cor(test_tbl, method = 'xiA')
-  f_cor(test_tbl, method = 'xiB')
+  f_cor(test_tbl, method = 'xiA', as_data_frame = TRUE)
+  f_cor(test_tbl, method = 'xiB', as_data_frame = TRUE)
 
   ## benchmarking in the matrix setting
 
   microbenchmark(cor(test_tbl, use = 'complete.obs', method = 'spearman'),
-                 f_cor(test_tbl, method = 'spearman'))
+                 f_cor(test_tbl,
+                       method = 'spearman',
+                       as_square_matrix = TRUE))
 
   microbenchmark(cor(test_tbl, use = 'complete.obs', method = 'kendall'),
-                 f_cor(test_tbl, method = 'kendallB'))
+                 f_cor(test_tbl,
+                       method = 'kendallB',
+                       as_square_matrix = TRUE))
 
-  microbenchmark(f_cor(test_tbl, method = 'xiA'),
-                 f_cor(test_tbl, method = 'xiB'))
+  microbenchmark(f_cor(test_tbl,
+                       method = 'xiA',
+                       as_square_matrix = TRUE),
+                 f_cor(test_tbl,
+                       method = 'xiB',
+                       as_square_matrix = TRUE))
 
 # END -------
