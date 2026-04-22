@@ -276,19 +276,11 @@
 
       p_adjusted <- NULL
 
-      if(type == "permutation") {
+      if(type == "permutation") idx <- 8 else idx <- 11
 
-        res <- cbind(res,
-                     p_adjusted = p.adjust(res[, 8],
-                                           method = adj_method))
-
-      } else {
-
-        res <- cbind(res,
-                     p_adjusted = p.adjust(res[, 11],
-                                           method = adj_method))
-
-      }
+      res <- cbind(res,
+                   p_adjusted = p.adjust(res[, idx],
+                                         method = adj_method))
 
     }
 

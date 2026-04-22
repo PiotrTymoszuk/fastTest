@@ -269,8 +269,10 @@
 
     if(adj_method != 'none') {
 
+      if(type == "permutation") idx <- 8 else idx <- 11
+
       result <- cbind(result,
-                      p_adjusted = p.adjust(result[, 11],
+                      p_adjusted = p.adjust(result[, idx],
                                             method = adj_method))
 
     }

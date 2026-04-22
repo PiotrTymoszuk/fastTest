@@ -64,7 +64,8 @@
              method = 'xiB',
              alternative = 'two.sided',
              n_iter = 100,
-             as_data_frame = TRUE)
+             as_data_frame = TRUE,
+             adj_method = "BH")
 
   f_cor_test(test_tbl,
              type = 'bootstrap',
