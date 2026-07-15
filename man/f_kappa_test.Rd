@@ -85,7 +85,7 @@ render the computation slower.}
 \value{
 A numeric vector, matrix, or a data frame with the following elements:
 numbers of pairwise complete observations, the requested correlation
-coefficients in the entire data set, bootstrapped means and confidence
+coefficients in the entire data set, bootstrapped means, SD, SEM and confidence
 interval bounds, numbers of successful iterations of the algorithm,
 numbers of re-samples in favor of the null hypothesis H0, numbers of
 re-samples in favor of the alternative hypothesis H1, p values, and,

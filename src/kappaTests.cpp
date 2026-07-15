@@ -216,11 +216,11 @@ NumericVector bootKappaVec(IntegerVector x,
 
   // result container
 
-  NumericVector result(9, NA_REAL);
+  NumericVector result(11, NA_REAL);
 
   result.names() =
     CharacterVector({"n", "kappa",
-                    "boot_mean", "lower_ci", "upper_ci",
+                    "boot_mean", "sd", "sem", "lower_ci", "upper_ci",
                     "iter_number", "h0_number", "h1_number",
                     "p_value"});
 
@@ -252,9 +252,11 @@ NumericVector bootKappaVec(IntegerVector x,
 
   if(n_eff_iter == 0) return result;
 
-  // bootstrapped mean and confidence intervals
+  // bootstrapped mean, dispersion statistics, and confidence intervals
 
   double bootMean = mean(kappa_resamp);
+  double bootSD = SD(kappa_resamp, true);
+  double bootSEM = SEM(kappa_resamp, true);
 
   NumericVector CI(2);
 
@@ -295,12 +297,14 @@ NumericVector bootKappaVec(IntegerVector x,
   result[0] = kappa_stat[0];
   result[1] = kappa_stat[1];
   result[2] = bootMean;
-  result[3] = CI[0];
-  result[4] = CI[1];
-  result[5] = n_eff_iter;
-  result[6] = h0_number;
-  result[7] = h1_number;
-  result[8] = p_value;
+  result[3] = bootSD;
+  result[4] = bootSEM;
+  result[5] = CI[0];
+  result[6] = CI[1];
+  result[7] = n_eff_iter;
+  result[8] = h0_number;
+  result[9] = h1_number;
+  result[10] = p_value;
 
   return result;
 
@@ -323,12 +327,12 @@ NumericMatrix bootKappaMtx(IntegerMatrix x,
   IntegerMatrix index_pairs = intPairs(n); /// indices of variable pairs
   int n_pairs = index_pairs.nrow();
 
-  NumericMatrix result(n_pairs, 11);
+  NumericMatrix result(n_pairs, 13);
 
   colnames(result) =
     CharacterVector({"variable1", "variable2",
                     "n", "kappa",
-                    "boot_mean", "lower_ci", "upper_ci",
+                    "boot_mean", "sd", "sem", "lower_ci", "upper_ci",
                     "iter_number", "h0_number", "h1_number",
                     "p_value"});
 
@@ -379,12 +383,14 @@ NumericMatrix bootKappa2Mtx(IntegerMatrix x,
 
   int n = x.ncol();
 
-  NumericMatrix result(n, 9);
+  NumericMatrix result(n, 11);
 
   colnames(result) =
     CharacterVector({"n",
                     "kappa",
                     "boot_mean",
+                    "sd",
+                    "sem",
                     "lower_ci",
                     "upper_ci",
                     "iter_number",
