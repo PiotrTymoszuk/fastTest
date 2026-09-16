@@ -21,10 +21,13 @@ NumericVector setFisherTst(NumericMatrix table,
   double x_non_entry = table(0, 1); // x features not in the entry
   double all_non_entry = table(1, 1); // all features not in the entry
 
-  // Calculate the odds ratio
+  // Calculate the odds ratio (OR) and standard error of log(OR)
 
   double odds_ratio =
     ((x_entry + laplace)/x_non_entry)/((all_entry + laplace)/all_non_entry);
+
+  double se_log_or =
+    sqrt(1/(x_entry + laplace) + 1/x_non_entry + 1/(all_entry + laplace) + 1/all_non_entry);
 
   // Calculate the hypergeometric probabilities, twp-tailed case
 
@@ -53,6 +56,7 @@ NumericVector setFisherTst(NumericMatrix table,
                           x_entry + x_non_entry,
                           x_entry,
                           odds_ratio,
+                          se_log_or,
                           p_value);
 
   result.names() =
@@ -60,6 +64,7 @@ NumericVector setFisherTst(NumericMatrix table,
                             "n_x_total",
                             "n_intersect",
                             "or",
+                            "se_log_or",
                             "p_value");
 
   return result;
@@ -82,13 +87,14 @@ NumericMatrix setFisher(CharacterVector x,
 
   int dictSize = dict.size();
 
-  NumericMatrix result(dictSize, 5);
+  NumericMatrix result(dictSize, 6);
 
   colnames(result) =
     CharacterVector::create("n_entry",
                             "n_x_total",
                             "n_intersect",
                             "or",
+                            "se_log_or",
                             "p_value");
 
   // serial testing

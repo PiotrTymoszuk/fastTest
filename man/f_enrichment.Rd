@@ -71,7 +71,10 @@ a numeric matrix or a data frame with the following columns:
 \item \code{n_entry}: numbers of all available features belonging to the set
 \item \code{n_x_total}: the total number of elements in vector \code{x}
 \item \code{n_intersect}: numbers of elements of \code{x} belonging to the set
-\item \code{or}: odds ratio
+\item \code{or}: odds ratio (OR)
+\item \code{se_log_or}: approximate standard error of log(OR) computed as square
+root of sum of inversions of cells of the contingency table (only for Fisher's
+exact test).
 \item \code{lower_ci} and \code{upper_ci}: lower and upper bound of confidence (only for
 random sampling)
 \item \code{iter_number}, \code{h0_number}, and \code{h1_number}: available only for the

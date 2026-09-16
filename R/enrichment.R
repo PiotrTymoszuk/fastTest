@@ -55,7 +55,11 @@
 #'
 #' * `n_intersect`: numbers of elements of `x` belonging to the set
 #'
-#' * `or`: odds ratio
+#' * `or`: odds ratio (OR)
+#'
+#' * `se_log_or`: approximate standard error of log(OR) computed as square
+#' root of sum of inversions of cells of the contingency table (only for Fisher's
+#' exact test).
 #'
 #' * `lower_ci` and `upper_ci`: lower and upper bound of confidence (only for
 #' random sampling)
