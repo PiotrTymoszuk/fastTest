@@ -193,7 +193,7 @@
       if(adj_method != 'none') {
 
         result <- cbind(result,
-                        p_adjusted = p.adjust(result[, 5],
+                        p_adjusted = p.adjust(result[, 6],
                                               method = adj_method))
 
       }
